@@ -1,0 +1,80 @@
+.modal-body{
+  padding: 0px;
+  background: #fbfbfb;
+}
+
+.detalhes-agendamento .table{
+  margin-bottom: 0px;
+}
+
+.detalhes-agendamento .table th {
+  font-weight: 500;
+  padding-left: 30px;
+  line-height: 25px;
+  width: 250px;
+  font-size: 13px;
+  color: #545454;
+}
+
+.detalhes-agendamento .table td {
+  
+  
+  color: #888;
+  padding-left: 20px;
+}
+
+.modal-title{
+  font-size: 15px;
+  text-align: center;
+  width: 100%;
+}
+
+.table-row-profissionais{
+  height: 70px;
+}
+
+.table-row-profissionais th{
+  vertical-align: bottom;
+}
+
+.table-row-profissionais td{
+  vertical-align: bottom;
+}
+
+.caption {
+  font-size: 13px;
+  font-weight: 600;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  color: #545454;
+}
+
+.th-clients{
+  background: #f6f6f6 !important;
+  border-left: 1px solid #fbfbfb;
+}
+/* 
+.detalhes-agendamento .table th {
+  border: 1px solid #ddd;
+} */
+
+.table p{
+  margin-bottom: 5px;
+}
+
+.btn-light{
+  color: #212529;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 20px;
+}
+
+.modal-header {
+  background: #f8f8f8;
+}
+
+.close:focus {
+  outline: -webkit-focus-ring-color auto 0px;
+}

@@ -1,0 +1,31 @@
+.padding-zero {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.container-form {
+    max-width: 780px !important;
+}
+
+.item-destaque {
+    padding: 15px 0px 0px 0px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+}
+
+.item-destaque .center{
+    font-size: 12px;
+}
+
+.item-destaque  .itens-adicionados .itens {
+    margin-right: 15px;
+}
+
+.title-tab-plano {
+    font-size: 16px;
+}
+
+
+  

@@ -1,0 +1,205 @@
+<form #companyForm="ngForm">
+  <app-layout>
+
+    <h2>Empresas Parceiras<i class="fas fa-angle-right"></i> <span>{{ !modoAlteracao ? 'Cadastrar' : 'Editar'}}</span>
+    </h2>
+
+    <p *ngFor="let alert of alerts">
+      <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+    </p>
+    <!-- CADASTRO DE USUÁRIO-->
+    <div class="card-body">
+      <h6 class="title-page">Cadastro</h6>
+      <span class="info-form">Dados</span>
+      <div class="container-form">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nome do sócio:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="patternName" required maxlength="150"
+              #ctrlPatternName="ngModel" [(ngModel)]="company.patternName">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nome fantasia:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="fantasyName" required maxlength="100"
+              #ctrlfantasyName="ngModel" [(ngModel)]="company.fantasyName" (change)="generateAcessCode()">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Descrição:</label>
+          <div class="col-sm-9">
+            <textarea type="texta" class="form-control" name="description" required maxlength="200"
+              #ctrldescription="ngModel" [(ngModel)]="company.description"></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">CNPJ:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="cnpj" required #ctrlCnpj="ngModel" maxlength="18"
+              mask='00.000.000/0000-00' [(ngModel)]="company.cnpj">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Contatos:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="contacts" #ctrlContacts="ngModel"
+              [(ngModel)]="company.contact" mask='{{maskPhone}}' (keydown)="onKeydownPhone($event)">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Site:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="site" required #ctrlSite="ngModel" [(ngModel)]="company.site"
+              max="100">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">E-mail:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="email" required #ctrlEmail="ngModel"
+              [(ngModel)]="company.email" max="100">
+          </div>
+        </div>
+      </div>
+      <hr class="line-detail">
+      <span class="info-form">Informações</span>
+      <div class="container-form">
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Segmento:</label>
+          <div class="col-sm-7">
+            <select name="segmento" class="form-control" #ctrlCtegory="ngModel" [(ngModel)]="areaPartnerSel">
+              <option *ngFor="let areaItem of areasPartner" [ngValue]="areaItem">
+                {{areaItem.name}}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-add-form" (click)="addArea()">Adicionar</button>
+          </div>
+        </div>
+        <div class="itens-adicionados">
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-9">
+              <div class="itens">
+                <span *ngFor="let area of areasPartnerSelected">{{area.name}} <i class="fas fa-times"
+                    (click)="remove(areasPartnerSelected, area);"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Categoria de serviços:</label>
+          <div class="col-sm-7">
+            <input name="categorie" class="form-control" [(ngModel)]="categorySel">
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-add-form" (click)="addCategory()">Adicionar</button>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="item-destaque">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Serviços:</label>
+          <div class="col-sm-2">
+            <input name="productServices" class="form-control" [(ngModel)]="product">
+          </div>
+          <!-- CAMPO NOVO-->
+          <label class="col-sm-1 col-form-label center">Valor:</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" name="valor" mask='000'>
+          </div>
+          <!-- CAMPO NOVO-->
+          <label class="col-sm-2 col-form-label">Desconto:</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" name="discount" #ctrlQtdClients="ngModel" [(ngModel)]="discount"
+              mask='000'>
+          </div>
+          <br>
+          <br>
+          <br>
+          <!-- CAMPO NOVO-->
+          <label class="col-sm-3 col-form-label">Associar à Categoria):</label>
+          <div class="col-sm-6">
+            <select class="form-control">
+              <option></option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <button class="btn btn-add-form" (click)="addCategory()">Adicionar</button>
+          </div>
+        </div>
+        <div class="itens-adicionados">
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-9">
+              <div class="itens">
+                <span *ngFor="let serviceDiscount of servicesDiscountsSelected">
+                  {{serviceDiscount.name}} para {{ serviceDiscount.qtdClients }} Pessoas
+                  {{serviceDiscount.orMore ? 'ou mais' : ''}} ({{serviceDiscount.discount}}% off) <i
+                    class="fas fa-times" (click)="remove(servicesDiscountsSelected, serviceDiscount)"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="line-detail">
+    <span class="info-form">Endereço</span>
+    <div class="container-form">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Local de atendimento:</label>
+        <div class="col-sm-9">
+          <input #endereco autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
+            name="endereco" #ctrlEndereco="ngModel" class="form-control" [(ngModel)]="company.endereco" maxlength="200">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Complemento:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="complement" #ctrlComplement="ngModel"
+            [(ngModel)]="company.complement" maxlength="200">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">CEP:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="cep" #ctrlCep="ngModel" [(ngModel)]="company.cep" maxlength="9"
+            mask="00000-000">
+        </div>
+      </div>
+      <div class="row justify-content-end">
+        <div class="col-sm-9">
+          <div id="gmap" #gmap style='width:100%;height:200px'></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPLOAD -->
+    <hr class="line-detail">
+    <span class="info-form">Tipo</span>
+
+    <div class="row upload-file mgT50">
+      <div class="col-md-12">
+        <a class="button-file" href="javascript:void(0)" (click)="file.click()">
+          <img *ngIf="!imageBase64" src="assets/icons/icon-upload.svg" alt="">
+          <img *ngIf="imageBase64" src="{{ imageBase64 }}" />
+        </a>
+        <p class="title-button-file">Clique ou arraste o arquivo até esta área reservada</p>
+        <input type="file" #file [multiple]="(maxFiles > 1)" (change)="onFileChange($event)" style="display:none" />
+      </div>
+    </div>
+
+    <div class="bottom-card">
+      <button class="btn btn-cancel-form" (click)="cancel()">Cancelar</button>
+      <button class="btn btn-save-form" (click)="save()">Salvar</button>
+    </div>
+  </app-layout>
+</form>

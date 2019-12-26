@@ -1,0 +1,48 @@
+<form #professionalForm="ngForm">
+    <app-layout>
+        <h2>Área de Atuação Empresas Parceiras <i class="fas fa-angle-right"></i> <span>{{ !modoAlteracao ? 'Cadastrar' : 'Editar'}}</span></h2>
+
+        <p *ngFor="let alert of alerts">
+            <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+        </p>
+
+        <div class="card-body">
+            <h6 class="title-page">Cadastro</h6>
+            <span class="info-form">Dados</span>
+            <div class="container-form">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Nome:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="completeName" maxlength="100" #ctrlCompleteName="ngModel" [(ngModel)]="categoryProdutoModel.name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Descrição:</label>
+                    <div class="col-sm-9">
+                        <textarea type="text" class="form-control" name="descricao" maxlength="1000" #ctrldescricao="ngModel" [(ngModel)]="categoryProdutoModel.description"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="line-detail">
+            <span class="info-form">Tipo</span>
+
+            <div class="row upload-file mgT50">
+                <div class="col-md-12">
+                    <a class="button-file" href="javascript:void(0)" (click)="file.click()">
+                        <img *ngIf="!imageBase64" src="assets/icons/icon-upload.svg" alt="">
+                        <img *ngIf="imageBase64" src="{{ imageBase64 }}" />
+                    </a>
+                    <p class="title-button-file">Clique ou arraste o arquivo até esta área reservada</p>
+                    <input type="file" #file [multiple]="(maxFiles > 1)" (change)="onFileChange($event)" style="display:none" />
+                </div>
+            </div>
+
+            <div class="bottom-card">
+                <button class="btn btn-cancel-form" (click)="cancel()">Cancelar</button>
+                <button class="btn btn-save-form" (click)="save()">Salvar</button>
+            </div>
+        </div>
+    </app-layout>
+</form>

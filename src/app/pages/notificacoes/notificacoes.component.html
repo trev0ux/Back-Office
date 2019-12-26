@@ -1,0 +1,58 @@
+<app-layout>
+  <h2>Notificações <i class="fas fa-angle-right"></i> <span>Cadastrar</span></h2>
+  <div class="card-body">
+    <h2 class="filtro">Filtros</h2>  
+   <div class="options">
+    <div class="item">
+      <input type="checkbox" id="profisionais" name="profisionais" value="profisionais" checked>
+      <label for="profisionais">Profisionais</label>
+    </div>
+    <div class="item">
+      <input type="checkbox" id="clientes" name="clientes" value="clientes" >
+      <label for="clientes">Clientes</label>
+    </div>
+   </div>
+   <div class="row">
+      <div class="col-md-12">
+        <h3>Push notification</h3>
+        <textarea class="text-col-left form-control" rows="10" placeholder="Digite sua mensagem aqui..."></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button (click)="open(content)">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal filtros -->
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Filtros</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <select name="" id="" class="form-control">
+            <option value="enquente-com-pontuacao"> Enquete com pontuação</option>
+            <option value="outros"> Outra opção</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <p>Segmento</p>
+          <select name="" id="" class="form-control">
+            <option value="todos"> Todos</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Salvar click')">Salvar</button>
+    </div>
+  </ng-template>
+  <!-- final Modal filtros -->
+
+</app-layout>

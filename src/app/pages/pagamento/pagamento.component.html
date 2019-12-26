@@ -1,0 +1,24 @@
+<app-layout>
+  <h2>Forma de pagamento <i class="fas fa-angle-right"></i> <span>Gerenciar</span></h2>
+  <div class="card-body">
+    <button class="btn add" routerLink="/pagamento/cadastrar"><i class="fas fa-plus"></i> Novo cartão</button>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 50%">Nome Titular</th>
+            <th scope="col" style="width: 40%">Número</th>
+            <th scope="col" class="center" style="width: 10%">Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cliItem of clients">
+            <td style="word-break: break-word;">{{cliItem.name}}</td>
+            <td style="word-break: break-word;">{{cliItem.email}}</td>
+            <td class="center"><div class="options"><i class="fas fa-pencil-alt editar" (click)="alterar(cliItem)"></i> <i class="far fa-trash-alt excluir"></i></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-layout>

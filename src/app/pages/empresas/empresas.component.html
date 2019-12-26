@@ -1,0 +1,28 @@
+<app-layout>
+    <h2>Empresas <i class="fas fa-angle-right"></i> <span>Gerenciar</span></h2>
+    <div class="card-body">
+        <button class="btn add" routerLink="/empresas/cadastrar"><i class="fas fa-plus"></i> Nova empresa</button>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 40%">Sócio</th>
+                    <th scope="col" style="width: 30%">Nome fantasia</th>
+                    <th scope="col" style="width: 20%">CNPJ</th>
+                    <th scope="col" class="center" style="width: 10%">Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let company of empresas">
+                    <td style="word-break: break-word;">{{company.patternName}}</td>
+                    <td style="word-break: break-word;">{{company.fantasyName}}</td>
+                    <td>{{company.cnpj | cnpjCustom}}</td>
+                    <td class="center">
+                        <div class="options"><i class="fas fa-pencil-alt editar" (click)="alterar(company)"></i>
+                            <i class="far fa-trash-alt excluir" (click)="excluir(company)"></i></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</app-layout>

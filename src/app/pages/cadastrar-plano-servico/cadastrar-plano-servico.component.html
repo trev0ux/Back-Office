@@ -1,0 +1,64 @@
+<!--PÁGINA NOVA-->
+<form #companyForm="ngForm">
+    <app-layout>
+        <h2>Planos de Assinatura<i class="fas fa-angle-right"></i>
+            <span>{{ !modoAlteracao ? 'Serviços' : 'Editar'}}</span></h2>
+        <p *ngFor="let alert of alerts">
+            <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+        </p>
+        <div class="card-body">
+            <h3 class="title-page">Cadastro de Serviços</h3>
+            <span class="info-form">Dados</span>
+            <div class="container-form">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Nome do serviço:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="patternName" required maxlength="150" #ctrlCompleteName="ngModel" [(ngModel)]="produtoModel.name">
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Descrição:</label>
+                    <div class="col-sm-9">
+                        <textarea type="texta" class="form-control" name="description" required maxlength="200" #ctrlDesc="ngModel" [(ngModel)]="produtoModel.description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Quantidade mínima de pessoas:</label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" name="patternName" required maxlength="4" #ctrlMinimalCustomerConsumer="ngModel" [(ngModel)]="produtoModel.minimalCustomerConsumer">
+                    </div>
+                    <label class="col-sm-3 col-form-label">Quantidade máxima de pessoas:</label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" name="patternName" required maxlength="4" #ctrlMaxCustomerConsumer="ngModel" [(ngModel)]="produtoModel.maxCustomerConsumer">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Tempo de serviço (min):</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" name="patternName" required maxlength="4" #ctrlServiceTime="ngModel" [(ngModel)]="produtoModel.serviceTime">
+                    </div>
+                </div>
+                <!--UPLOAD-->
+                <hr class="line-detail">
+                <span class="info-form">Tipo</span>
+
+                <div class="row upload-file mgT50">
+                    <div class="col-md-12">
+                        <a class="button-file" href="javascript:void(0)" (click)="file.click()">
+                            <img *ngIf="!imageBase64" src="assets/icons/icon-upload.svg" alt="">
+                            <img *ngIf="imageBase64" src="{{ imageBase64 }}" />
+                        </a>
+                        <p class="title-button-file">Clique ou arraste o arquivo até esta área reservada</p>
+                        <input type="file" #file [multiple]="(maxFiles > 1)" (change)="onFileChange($event)" style="display:none" />
+                    </div>
+                </div>
+
+                <div class="bottom-card">
+                    <button class="btn btn-cancel-form" (click)="cancel()">Cancelar</button>
+                    <button class="btn btn-save-form" (click)="save()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </app-layout>
+</form>

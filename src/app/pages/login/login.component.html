@@ -1,0 +1,30 @@
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-pic js-tilt" data-tilt>
+                <img src="assets/images/img-01.png" alt="IMG">
+            </div>
+            <form class="login100-form validate-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+                <span class="login100-form-title">Login<h6>Entre na sua conta Yoolo</h6></span>
+                <div class="wrap-input100">
+                    <input class="input100" type="text" name="email" placeholder="Informe seu e-mail" [formControl]="form.controls['uname']">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                    <small *ngIf="form.controls['uname'].hasError('required') && form.controls['uname'].touched" class="text-danger support-text">E-mail é obrigatório.</small>
+                </div>
+                <div class="wrap-input100">
+                    <input class="input100" type="password" name="pass" placeholder="Informe sua senha" [formControl]="form.controls['password']">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                    <small *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched" class="text-danger support-text">Senha é obrigatória.</small>
+                </div>
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" type="submit" [disabled]="!form.valid">Entrar</button>
+                </div>
+                <div class="cadastro-lnk">
+                    <h3 [routerLink]="['/cadastro']">Ainda não possui cadastro? <span>Cadastre-se.</span></h3>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

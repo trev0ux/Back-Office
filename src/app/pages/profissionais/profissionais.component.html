@@ -1,0 +1,437 @@
+<app-layout>
+    <h2>Profissionais <i class="fas fa-angle-right"></i> <span>Gerenciar</span></h2>
+    <div class="card-body">
+        <button class="btn add" routerLink="/profissionais/cadastrar"><i class="fas fa-plus"></i> Novo profissional</button>
+
+        <ngb-tabset class="profissional-tab">
+
+            <ngb-tab *ngIf="!hasDesactivesProfessionals">
+                <ng-template ngbTabTitle>
+                    <div (click)="listAllDesativado()">Reprovados</div>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <h3>Prossifionais reprovados</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">CPF</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col">Motivo</th>
+                                    <th scope="col" class="center">Opções</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let profPreCad of professionalsDisableds">
+                                    <td>{{profPreCad.name}}</td>
+                                    <td>{{ profPreCad.cpf | cpfCustom }}</td>
+                                    <td>{{profPreCad.email}}</td>
+                                    <td>{{profPreCad.phone}}</td>
+                                    <td>{{profPreCad.motivoStatus}}</td>
+                                    <td class="center">
+                                        <div class="options">
+                                            <i class="far fa-eye editar" (click)="verDocumento(profPreCad, content)"></i>
+                                            <i class="fas fa-pencil-alt editar" (click)="alterar(profPreCad)"></i>
+                                            <!-- <i class="far fa-trash-alt excluir"></i> -->
+                                            <i class="fas fa-download editar" (click)="download(profPreCad)"></i>
+                                        </div>
+                                    </td>
+                                    <td><button class="aprovar" (click)="aprovar(profPreCad, 'Pre-cadastrado')">Aprovar</button></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+
+            <ngb-tab *ngIf="hasDesactivesProfessionals">
+                <ng-template ngbTabTitle>
+                    <div (click)="listAllPreCadastrados()">Pré-cadastrados</div>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <h3>Prossifionais pré-cadastrados</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">CPF</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col" class="center">Opções</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let profPreCad of professionalsPreCadastrados">
+                                    <td>{{profPreCad.name}}</td>
+                                    <td>{{ profPreCad.cpf | cpfCustom }}</td>
+                                    <td>{{profPreCad.email}}</td>
+                                    <td>{{profPreCad.phone}}</td>
+                                    <td class="center">
+                                        <div class="options">
+                                            <i class="far fa-eye editar" (click)="verDocumento(profPreCad, content)"></i>
+                                            <i class="fas fa-pencil-alt editar" (click)="alterar(profPreCad)"></i>
+                                            <!-- <i class="far fa-trash-alt excluir"></i> -->
+                                            <i class="fas fa-download editar" (click)="download(profPreCad)"></i>
+                                        </div>
+                                    </td>
+                                    <td><button class="aprovar" (click)="aprovar(profPreCad, 'Pre-cadastrado')">Aprovar</button></td>
+                                    <td><button class="aprovar" (click)="reprovarProfissional(reprovar, profPreCad)">Reprovar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="hasDesactivesProfessionals">
+                <ng-template ngbTabTitle>
+                    <div (click)="listAllProfessionalsInTrainning()">Em treinamento</div>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <h3>Profissionais em treinamento</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">CPF</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col" class="center">Opções</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let profInTrainning of professionalsInTrainning">
+                                    <td>{{profInTrainning.name}}</td>
+                                    <td>{{profInTrainning.cpf | cpfCustom}}</td>
+                                    <td>{{profInTrainning.email}}</td>
+                                    <td>{{profInTrainning.phone}}</td>
+                                    <td class="center">
+                                        <div class="options"><i class="fas fa-pencil-alt editar" (click)="alterar(profInTrainning)"></i> <i class="far fa-trash-alt excluir"></i></div>
+                                    </td>
+                                    <td><button class="aprovar" (click)="aprovar(profInTrainning, 'Treinamento')">Aprovar</button></td>
+                                    <td><button class="aprovar" (click)="reprovarProfissional(reprovar, profInTrainning)">Reprovar</button>
+                                </tr>
+                                <!--tr>
+                  <td>Tiago Lopes</td>
+                  <td>124.714.861-10</td>
+                  <td>tiago.lopes@agilizeware.com</td>
+                  <td class="center"><div class="options"><i class="fas fa-pencil-alt editar"></i> <i class="far fa-trash-alt excluir"></i></div></td>
+                  <td><button class="aprovar">Aprovar</button></td>
+                </tr-->
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="hasDesactivesProfessionals">
+                <ng-template ngbTabTitle>
+                    <div (click)="listAllEmAvaliacao()">Avaliação</div>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <h3>Profissionais em avaliação presencial</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">CPF</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col" class="center">Opções</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let profInAvaliation of professionalsEmAvaliacao">
+                                    <td>{{profInAvaliation.name}}</td>
+                                    <td>{{profInAvaliation.cpf | cpfCustom}}</td>
+                                    <td>{{profInAvaliation.email}}</td>
+                                    <td>{{profInAvaliation.phone}}</td>
+                                    <td class="center">
+                                        <div class="options"><i class="fas fa-pencil-alt editar" (click)="alterar(profInAvaliation)"></i> <i class="far fa-trash-alt excluir"></i></div>
+                                    </td>
+                                    <td><button class="aprovar" (click)="aprovar(profInAvaliation, 'Avaliacao')">Aprovar</button></td>
+                                    <td><button class="aprovar" (click)="reprovarProfissional(reprovar, profInAvaliation)">Reprovar</button>
+
+                                </tr>
+                                <!--tr>
+                  <td>Tiago Lopes</td>
+                  <td>124.714.861-10</td>
+                  <td>tiago.lopes@agilizeware.com</td>
+                  <td class="center"><div class="options"><i class="fas fa-pencil-alt editar"></i> <i class="far fa-trash-alt excluir"></i></div></td>
+                  <td><button class="aprovar">Aprovar</button></td>
+                </tr-->
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="hasDesactivesProfessionals">
+                <ng-template ngbTabTitle>
+                    <div (click)="listAllProfessionalsActived()">Aprovados</div>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <h3>Profissionais Aprovados/Aptos</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">CPF</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col" class="center">Opções</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let profApproved of professionalsApproved">
+                                    <td>{{profApproved.name}}</td>
+                                    <td>{{profApproved.cpf | cpfCustom}}</td>
+                                    <td>{{profApproved.email}}</td>
+                                    <td>{{profApproved.phone}}</td>
+                                    <td class="center">
+                                        <div class="options"><i class="fas fa-pencil-alt editar" (click)="alterar(profApproved)"></i> <i class="far fa-trash-alt excluir"></i></div>
+                                    </td>
+                                    <td class="center">
+                                        <p class="status">Aprovado</p>
+                                    </td>
+                                    <td><button class="aprovar" (click)="download({_id: profApproved.idProfessional})">Download</button></td>
+                                    <td><button class="aprovar" (click)="reprovarProfissional(reprovar, profApproved)">Reprovar</button>
+                                </tr>
+                                <!--tr>
+                  <td>Tiago Lopes</td>
+                  <td>124.714.861-10</td>
+                  <td>tiago.lopes@agilizeware.com</td>
+                  <td class="center"><div class="options"><i class="fas fa-pencil-alt editar"></i> <i class="far fa-trash-alt excluir"></i></div></td>
+                  <td class="center">
+                    <p class="status">Aprovado</p>
+                  </td>
+                </tr-->
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+
+    </div>
+
+
+</app-layout>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Detalhes do cadastro</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    <div class="modal-body">
+        <div class="detalhes-profissional">
+            <table class="table table-striped">
+                <tr>
+                    <th>Nome</th>
+                    <td>
+                        <p>{{profSel.name}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>
+                        <p>{{profSel.status}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>
+                        <p>{{profSel.email}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Telefone</th>
+                    <td>
+                        <p>{{profSel.phone}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Sexo</th>
+                    <td>
+                        <p>{{profSel.sexo}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>CPF</th>
+                    <td>
+                        <p>{{profSel.cpf | cpfCustom}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>RG</th>
+                    <td>
+                        <p>{{profSel.rg}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Data de Nascimento</th>
+                    <td>
+                        <p>{{profSel.dataNascimento}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>CEP</th>
+                    <td>
+                        <p>{{profSel.cep}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Logradouro</th>
+                    <td>
+                        <p>{{profSel.logradouro}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Número</th>
+                    <td>
+                        <p>{{profSel.numero}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Bairro</th>
+                    <td>
+                        <p>{{profSel.bairro}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Cidade</th>
+                    <td>
+                        <p>{{profSel.cidade}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>UF</th>
+                    <td>
+                        <p>{{profSel.uf}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Experiência</th>
+                    <td>
+                        <p>{{profSel.experiencia}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Como Trabalha</th>
+                    <td>
+                        <p>{{profSel.comoTrabalha}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Possui Cursos?</th>
+                    <td>
+                        <p>{{profSel.possuiCursos}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Possui Materiais?</th>
+                    <td>
+                        <p>{{profSel.possuiMateriais}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Produtos Utilizados</th>
+                    <td>
+                        <p>{{profSel.produtosUtilizados}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Serviços prestados</th>
+                    <td>
+                        <p *ngFor="let item of categoriasProfSel">{{item}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Segmento</th>
+                    <td>
+                        <p>{{profSel.segmento}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Sobre</th>
+                    <td>
+                        <p>{{profSel.sobre}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Documento</th>
+                    <td>
+                        <p>{{profSel.fileName}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Certificados</th>
+                    <td>
+                        <p *ngFor="let item of profSel?.fileNameCertificados">{{item}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light aprovar-btn" (click)="aprovar(profSel, 'Pre-cadastrado', modal)">Aprovar</button>
+        
+        <button type="button" class="btn btn-light reprovar-btn" (click)="reprovarProfissional(reprovar, profSel)">Reprovar</button>
+    </div>
+</ng-template>
+
+<ng-template #reprovar let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Opções</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="detalhes-profissional confirmar-reprovacao">
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <select name="motivoSel" #ctrlMotivoSelect="ngModel" [(ngModel)]="motivo" class="form-control">
+                                <option value="Não possui os requisitos necessários">Não possui os requisitos necessários</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="center">Descreva o motivo</p>
+                            <textarea class="form-control descricao" name="motivo" #ctrlMotivo="ngModel" [(ngModel)]="profSel.motivo" maxlength="100"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer custom-footer">
+        <button type="button" class="btn btn-light cancelar-btn" (click)="modal.close('Close click')">Cancelar</button>
+        <button type="button" class="btn btn-light reprovar-btn" (click)="desaprovar('Desativado', modal)">Reprovar</button>
+    </div>
+</ng-template>

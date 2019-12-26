@@ -1,0 +1,85 @@
+<app-layout>
+    <h2 *ngIf="form1">Validar código <i class="fas fa-angle-right"></i> <span>Informar token</span></h2>
+    <h2 *ngIf="form2">Validar código <i class="fas fa-angle-right"></i> <span>Usuário encontrado</span></h2>
+
+
+    <form #professionalForm="ngForm">
+        <div class="card-body">
+
+            <div *ngIf="form1" class="content-token">
+                <div class="row">
+                    <div class="col-12">
+                        <p *ngFor="let alert of alerts">
+                            <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <input placeholder="Digite o Token" type="text" class="form-control" name="token" maxlength="50" #ctrlToken="ngModel" [(ngModel)]="token">
+                    </div>
+                    <div class="col-3 pdL0">
+                        <button (click)="pesquisar()" type="button" class="btn btn-confirm">Validar</button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="form2" class="content-token-validate">
+                <div class="row">
+                    <p *ngFor="let alert of alerts">
+                        <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Usuário</h3>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p>Nome: <span>{{eventItem.client[0]?.name}}</span></p>
+                            </div>
+                            <div class="col-sm-3">
+                                <p>CPF: <span>{{eventItem.client[0]?.cpf}}</span></p>
+                            </div>
+                            <div class="col-sm-3">
+                                <p>Dia: <span>{{eventItem.startDate | date: 'dd/MM/yyyy H:mm'}}</span></p>
+                            </div>
+                            <div class="col-sm-3">
+                                <p>Horário: <span>{{eventItem.endDate | date: 'dd/MM/yyyy H:mm'}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Serviços selecionados</h3>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 50%">Serviço</th>
+                                    <th scope="col" style="width: 30%">Desconto</th>
+                                    <th scope="col" style="width: 30%">Valor Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let prdtItem of eventItem.products">
+                                    <td style="word-break: break-word;">{{prdtItem.name}}</td>
+                                    <td style="word-break: break-word;">{{prdtItem.discount}}</td>
+                                    <td>R$ {{(prdtItem.valor * (prdtItem.discount / 100)).toFixed(2)}}</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                    <h2>Valor total a pagar </h2>
+                    <div>{{sumTotal()}}</div>
+                </div>
+                <div class="options">
+                    <button (click)="voltar()" type="button" class="btn btn-cancelar">Cancelar</button>
+                    <button (click)="confirmarToken()" type="button" class="btn btn-confirmar">Permitir</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</app-layout>

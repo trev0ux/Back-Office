@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"trsttc.profissionals"},{"v":2,"key":{"email":1},"name":"email_1","ns":"trsttc.profissionals","background":true}],"uuid":"0eab43283aae44ee932afa1d92c86b8c"}

@@ -1,0 +1,48 @@
+<div class="limiter">
+  <div class="container-login100">
+      <div class="wrap-login100">
+          <div class="login100-pic js-tilt" data-tilt>
+              <img src="assets/images/img-01.png" alt="IMG">
+          </div>
+          <form class="login100-form validate-form" [formGroup]="form">
+              <span class="login100-form-title">Cadastro<h6>Crie sua conta na Yoolo</h6></span>
+              <div class="wrap-input100">
+                <input class="input100" type="text" name="login" placeholder="Crie um username" [formControl]="form.controls['login']">
+                <span class="focus-input100"></span>
+                <span class="symbol-input100"><i class="fa fa-link" aria-hidden="true"></i></span>
+                <small *ngIf="form.controls['login'].hasError('required') && form.controls['login'].touched" class="text-danger support-text">Username é obrigatório.</small>
+              </div>
+              <div class="wrap-input100">
+                <input class="input100" type="text" name="name" placeholder="Informe seu nome" [formControl]="form.controls['name']">
+                <span class="focus-input100"></span>
+                <span class="symbol-input100"><i class="fa fa-user" aria-hidden="true"></i></span>
+                <small *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched" class="text-danger support-text">Nome é obrigatório.</small>
+              </div>
+              <div class="wrap-input100">
+                  <input class="input100" type="text" name="email" placeholder="Informe seu e-mail" [formControl]="form.controls['email']">
+                  <span class="focus-input100"></span>
+                  <span class="symbol-input100"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                  <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="text-danger support-text">E-mail é obrigatório.</small>
+              </div>
+              <div class="wrap-input100">
+                  <input class="input100" type="password" name="pass" placeholder="Crie uma senha" [formControl]="form.controls['password']">
+                  <span class="focus-input100"></span>
+                  <span class="symbol-input100"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+                  <small *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched" class="text-danger support-text">Senha é obrigatória.</small>
+              </div>
+              <div class="wrap-input100">
+                <input class="input100" type="password" name="confirm-password" placeholder="Confirmar sua senha" [formControl]="form.controls['confirmPassword']">
+                <span class="focus-input100"></span>
+                <span class="symbol-input100"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                <small *ngIf="form.controls['confirmPassword'].hasError('required') && form.controls['confirmPassword'].touched" class="text-danger support-text">Confirme sua senha.</small>
+              </div>
+              <div class="container-login100-form-btn">
+                  <button class="login100-form-btn" type="submit" [disabled]="!form.valid">Salvar</button>
+              </div>
+              <div class="cadastro-lnk">
+                  <h3 [routerLink]="['/login']">Já possui cadastro? <span>Efetue login.</span></h3>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>

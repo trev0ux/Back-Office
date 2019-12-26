@@ -1,0 +1,15 @@
+.dragarea{
+    font-size: 24px;
+    border: 1px solid #bbb; 
+    padding: 20px ;
+    background-color: #fff;
+    color: #bbb;
+}
+.droparea{
+    font-size: 24px;
+    border: 1px dashed #bbb; 
+    padding: 20px ;
+    background-color: #eff;
+    color: #aaa;
+}
+

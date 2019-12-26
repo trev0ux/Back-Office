@@ -1,0 +1,109 @@
+<!--PÁGINA NOVA-->
+<form #companyForm="ngForm">
+  <app-layout>
+    <h2>Planos de Assinatura<i class="fas fa-angle-right"></i> <span>{{ !modoAlteracao ? 'Categoria' : 'Editar'}}</span>
+    </h2>
+    <p *ngFor="let alert of alerts">
+      <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+    </p>
+    <div class="card-body">
+      <h3 class="title-page">Cadastro de Categoria</h3>
+      <span class="info-form">Dados</span>
+      <div class="container-form">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nome do plano:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="patternName" required maxlength="150">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Descrição:</label>
+          <div class="col-sm-9">
+            <textarea type="texta" class="form-control" name="description" required maxlength="200"></textarea>
+          </div>
+        </div>
+         <!--ADICIONAR ITEM: TAG -->
+         <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Item:</label>
+            <div class="col-sm-7">
+              <input name="item" class="form-control" #ctrlCtegory="ngModel" [(ngModel)]="itemSel">
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-add-form" (click)="addItem()">Adicionar</button>
+            </div>
+            <div class="itens-adicionados">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="itens">
+                    <span *ngFor="let category of categorieItemSelected"><i class="fas fa-times"
+                        (click)="remove(categorieItemSelected, category);"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Quantidade de serviços:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="patternName" required maxlength="150">
+          </div>
+        </div>
+                <!--INPUTS DO TIPO DO PLANO-->
+        <div class="form-group row">
+          <div class="col-sm-9">
+            <label class="col-sm-4 col-form-label">Tipo de plano:</label>
+            <label class="col-sm-3 col-form-label">Organizacional:</label>
+            <input type="radio" name="organizacional" checked>
+            <label class="col-sm-4 col-form-label">Residencial:</label>
+            <input type="radio" name="residencial">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Valor do plano:</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" name="patternName" required maxlength="150">
+          </div>
+        </div>
+        <!--ADICIONAR SERVIÇOS DO PLANO: TAG -->
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Serviços do plano:</label>
+          <div class="col-sm-7">
+            <input name="categorie" class="form-control" #ctrlCtegory="ngModel" [(ngModel)]="categoryServicePlanoSel">
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-add-form" (click)="addServicePlanoCategory()">Adicionar</button>
+          </div>
+          <div class="itens-adicionados">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="itens">
+                  <span *ngFor="let category of categoriesServicePlanoSelected"> <i class="fas fa-times"
+                      (click)="remove(categoriesServicePlanoSelected, category);"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>   
+      <!--UPLOAD-->
+    <hr class="line-detail">
+    <span class="info-form">Tipo</span>
+
+    <div class="row upload-file mgT50">
+      <div class="col-md-12">
+        <a class="button-file" href="javascript:void(0)" (click)="file.click()">
+          <img *ngIf="!imageBase64" src="assets/icons/icon-upload.svg" alt="">
+          <img *ngIf="imageBase64" src="{{ imageBase64 }}" />
+        </a>
+        <p class="title-button-file">Clique ou arraste o arquivo até esta área reservada</p>
+        <input type="file" #file [multiple]="(maxFiles > 1)" (change)="onFileChange($event)" style="display:none" />
+      </div>
+    </div>
+
+    <div class="bottom-card">
+      <button class="btn btn-cancel-form" (click)="cancel()">Cancelar</button>
+      <button class="btn btn-save-form" (click)="save()">Salvar</button>
+    </div>
+  </app-layout>
+</form>

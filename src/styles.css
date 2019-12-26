@@ -1,0 +1,583 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700');
+
+body{
+    background-color: #343c49;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card-body {
+    position: relative;
+    word-wrap: break-word;
+    background-color: #fff;
+    border-radius: 2px;
+    border: 0px;
+    padding: 20px;
+    box-shadow: 0px -1px 2px 0px rgba(221, 221, 221, 0.15);
+} 
+
+h2{
+    color: #04b6ba;
+    font-size: 18px;
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+
+h2 i{
+    font-size: 13px;
+}
+
+h2 span{
+    font-size: 16px;
+    font-weight: 100;
+    margin-left: 5px;
+    color: #aaa;
+}
+
+.add {
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 13px;
+    padding: 10px 20px 10px 15px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.add:hover{
+    background: rgb(63, 163, 67) ;
+}
+
+.add i{
+    font-size: 11px;
+    margin-right: 4px;
+}
+
+.table {
+    border-bottom: 2px solid #f8f8f8;
+    font-size: 13px;
+    background: #f8f8f8;
+}
+
+.table thead{
+    background: #f2f2f2;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fff;
+}
+
+.table thead th {
+    border-bottom: 0px;
+}
+
+.table th, .table td {
+    border-top: 0px;
+}
+
+.table .options .editar {
+    margin-right: 10px;
+    margin-left: 5px;
+    color: #999;
+    display: inline;
+    cursor: pointer;
+}
+
+.table .options .excluir {
+    margin-right: 10px;
+    margin-left: 5px;
+    color: #999;
+    cursor: pointer;
+}
+
+.table .options .ver {
+    margin-right: 10px;
+    margin-left: 5px;
+    color: #999;
+    cursor: pointer;
+}
+
+.table .options .editar:hover {
+    color: #03a9f4;
+}   
+
+.table .options .excluir:hover {
+    color: #F44336;
+}
+
+.title-page {
+    margin-left: -20px;
+    margin-right: -20px;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 0px 20px 20px 20px;
+    color: #404852;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.container-form {
+    max-width: 705px;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+.col-form-label{
+    text-align: right;
+    color: #b6b6b6;
+    font-size: 13px;
+}
+
+.info-form {
+    font-size: 11px;
+    color: #b6b6b6;
+    float: right;
+    margin-top: -8px;
+    margin-bottom: 15px;
+    background: #f8f8f8;
+    margin-right: -20px;
+    padding: 3px 20px;
+    border-radius: 0px 0px 0px 4px;
+    border-bottom: 1px solid #f1f1f1;
+    border-left: 1px solid #f1f1f1;
+}
+
+.line-detail {
+    margin-top: 30px;
+    margin-bottom: 8px;
+    margin-right: -20px;
+    margin-left: -20px;
+    border: 0;
+    border-top: 1px solid #f1f1f1;
+}
+
+.btn-add-form{
+    font-size: 13px;
+    background: #58b6ba;
+    color: #fff;
+    height: 38px;
+    border-radius: 3px;
+    margin-left: -10px;
+    min-width: 102px;
+}
+
+
+
+.center-text-form {
+    text-align: center;
+    font-size: 12px;
+    line-height: 38px;
+    color: #aaa;
+    width: 100%;
+    display: block;
+}
+
+.itens-adicionados{
+    margin-bottom: 15px;
+}
+
+
+.itens-adicionados span{
+    border: 1px solid #58b6ba;
+    background: transparent;
+    padding: 3px 12px 3px 15px;
+    color: #58b6ba;
+    border-radius: 5px;
+    font-size: 13px;
+    text-align: center;
+    display: inline-block;
+    margin-right: 5px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.itens-adicionados .itens {
+    background: #f9f9f9;
+    border-radius: 5px;
+    padding: 10px 10px 5px 10px;
+}
+
+.itens-adicionados span i{
+    margin-left: 7px;
+    margin-top: 1px;
+    font-size: 11px;
+    color: #58b6ba;
+}
+
+.bottom-card .btn-save-form {
+    color: #fff;
+    background: #4CAF50;
+    padding: 10px 30px;
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    width: 120px;
+    float: right;
+}
+
+.form-control {
+    font-size: 13px;
+    border-radius: 0rem;
+}
+
+.bottom-card .btn-cancel-form {
+    color: #999;
+    background: #ececec;
+    padding: 10px 30px;
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    width: 120px;
+    float: left;
+}
+
+
+.bottom-card{
+    height: 70px;
+    border-top: 1px solid #f1f1f1;
+    padding-top: 15px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 20px;
+    background: white;
+}
+
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    font-size: 13px;
+    line-height: 24px;
+}
+
+.nav-tabs .nav-link{
+    font-size: 13px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.nav-tabs a {
+    color: #aaa;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #ffffff;
+    background: #04b6ba;
+    border-color: #04b6ba;
+    font-weight: 500;
+}
+
+.nav-tabs{
+    width: 415px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    border-top-left-radius: 0rem !important; 
+    border-top-right-radius: 0rem !important; 
+}
+
+.tab-content > .active {
+    border: 1px solid #ddd;
+    margin-top: -1px;
+    border-radius: 0px 5px 5px 5px;
+    background: #ffff;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 13px;
+}
+
+.tab-content h3 {
+    font-size: 15px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-weight: 400;
+    color: #00b3b7;
+}
+
+.custom-label{
+    float: right;
+    height: 20px;
+    padding-top: 0px;
+}
+
+.profissional-tab .nav-tabs {
+    width: 550px;
+}
+
+@media (max-width: 992px){
+    .navbar{
+        width: 100% !important;
+        margin-left: 0px !important;
+        z-index: 5;
+    }
+
+    .logo{
+        margin-bottom: 10px;
+    }
+
+    .menu{
+        position: absolute;
+        z-index: 1;
+        margin-top: 0px !important;
+        height: calc(100vh - 60px) !important;
+        min-height: 600px !important;
+        box-shadow: 5px 5px 25px 0 rgba(46, 61, 73, 0.12);
+    }
+
+    .main{
+        width: 100% !important;
+    }
+
+    .info-form {
+        display: none;
+    }
+}
+
+@media (max-width: 515px){
+
+    .tab-content h3 {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 768px){
+    .btn-add-form{
+        margin-left: -20px;
+        min-width: auto;
+        height: 35px;
+    }
+}
+
+@media (max-width: 575px){
+    .col-form-label {
+        text-align: left;
+    }
+    .btn-add-form {
+        margin-left: 0px;
+        min-width: 100%;
+        height: 38px;
+        margin-top: 6px;
+    }
+}
+
+@media (max-width: 700px){
+    .nav-tabs {
+        width: 100% !important;
+    }
+
+    .nav-tabs .nav-item {
+        display: block;
+        width: 33.33333%;
+    }
+
+    .profissional-tab .nav-tabs .nav-item {
+        display: block;
+        width: 25%;
+    }
+
+    .nav-tabs {
+        width: 100% !important;
+    }
+
+    .nav-tabs .nav-link{
+        min-width: auto;
+        height: 100%;
+        border-color: #e9ecef #e9ecef #dee2e6;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    .tab-content > .active{
+        border-radius: 0px 0px 5px 5px;
+    }
+}
+
+.aprovar{
+    background: #03A9F4;
+    color: #fff;
+    border: 0px;
+    border-radius: 3px;
+    padding: 8px 14px;
+    font-size: 12px;
+    box-shadow: 5px 5px 25px 0 rgba(46, 61, 73, 0.12);
+    cursor: pointer;
+}
+
+.buttonMenuSair{
+    padding-right: 10px;
+    padding-left: 5px;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+} 
+
+.menuSair {
+    position: absolute;
+    right: 15px;
+    top: 50px;
+    min-width: 110px;
+    text-align: center;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.menuSair .card-body{
+    padding: 15px;
+    color: #06b0b4;
+    font-weight: 400;
+}
+
+.menuSair .card-body .fas {
+    float: left !important;
+    margin-top: 2px;
+    color: #06b0b4 !important;
+}
+
+.menuSair .card{
+    border-color: #06b0b4 !important;
+}
+
+
+.upload-file{
+    background: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    text-align: center;
+    margin: 0px 0px 30px 0px;
+}
+
+.upload-file .button-file{
+    display: block;
+    padding: 50px 50px 40px 50px;
+}
+
+.upload-file .button-file img{
+    height: 125px;   
+}
+
+.upload-file .title-button-file{
+    color: #909090;
+    margin-bottom: 30px;
+    font-size: 13px;
+}
+
+.mgT50{
+    margin-top: 50px;
+}
+
+.component-mensagens .nav-pills {
+    max-width: 280px !important;
+    margin: 0 auto !important;
+    margin-bottom: 20px !important;
+    font-size: 16px;
+}
+
+  
+.component-mensagens .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #04b6ba;
+}
+
+.component-mensagens .nav-item{
+    border: 1px solid #04b6ba;
+}
+
+.component-mensagens .nav-item:first-child {
+    border-radius: 4px 0px 0px 4px;
+}
+
+.component-mensagens .nav-item:last-child {
+    border-radius: 0px 4px 4px 0px;
+}
+
+.component-mensagens .nav-pills .nav-link {
+    border-radius: 0;
+    color: #04b6ba;
+}
+
+.component-mensagens .tab-content > .active{
+    padding: 0px !important;
+    min-height: 400px;
+    border-radius: 5px;
+}
+
+.filter-data .form-control{
+    display: inline-block;
+    max-width: 120px;
+    margin: 0px 9px;
+}
+
+.filter-data{
+    float: right;
+    margin-bottom: 35px;
+    font-size: 14px;
+    margin-top: 30px;
+    width: 500px;
+}
+
+.filter-data .btn{
+    font-size: 14px;
+    height: 38px;
+    padding: 0px 18px;
+    background: #4CAF50;
+    color: white;
+    font-weight: 500;
+}
+
+.selecionar-servicos{
+    margin-bottom: 20px;
+}
+
+.selecionar-servicos .accordion .card-header{
+    padding: 6px 10px !important;
+}
+.selecionar-servicos .accordion .card-header button{
+    font-size: 14px;
+    font-weight: 500;
+    color: #58b6ba;
+    width: 100%;
+    text-align: left;
+}
+
+.selecionar-servicos .accordion .card-header i{
+    float: right;
+}
+
+.selecionar-servicos .accordion .card-header button:hover{
+    text-decoration: none;
+}
+
+.selecionar-servicos .accordion .card-header button:focus{
+    text-decoration: none;
+}
+
+.selecionar-servicos .accordion .card-body{
+    padding: 0px;
+}
+
+.selecionar-servicos ul{
+    list-style-type: none;
+    margin-bottom: -1px !important;
+
+}
+
+.selecionar-servicos li{
+    padding: 12px 20px;
+    border-bottom: 1px solid #d9d9d9;
+    font-size: 14px;
+}
+
+.selecionar-servicos li i{
+    float: right;
+    margin-top: 0px;
+    color: #4CAF50;
+    font-size: 17px;
+}
+

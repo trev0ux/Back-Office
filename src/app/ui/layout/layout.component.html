@@ -1,0 +1,130 @@
+<div [class.sem-menu]="!menuActive">
+    <nav class="navbar">
+        <div class="menu-link" (click)="closeMenu()" *ngIf="menuActive">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="menu-link" (click)="openMenu()" *ngIf="!menuActive">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="options-right">
+            <p class="buttonMenuSair" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                <i class="fas fa-ellipsis-v"></i>
+            </p>
+            <div id="collapseExample" class="menuSair" [ngbCollapse]="isCollapsed">
+                <div class="card">
+                    <div class="card-body" (click)="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="menu">
+        <div class="logo">
+            <img src="assets/images/logo.png" alt="" class="img-fluid">
+        </div>
+        <div class="menu-content">
+            <!--NAVEGAÇÃO DAS TELAS-->
+
+            <!--PLANOS DE ASSINATURA-->
+            <nav>
+                <div *ngIf="(role == 'Admin' || role == 'CompanyPartner')" ngbDropdown class="item-menu-dropdown">
+                    <button class="item" id="configuracoes" ngbDropdownToggle><i class="fas fa-tags item-icon"></i>Planos de Assinatura
+          <i class="fas fa-angle-down icon-down"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="planos">
+                        <button class="dropdown-item" routerLink="/cadastrar-plano-categoria">Cadastro de Planos</button>
+                        <button class="dropdown-item" routerLink="/cadastrar-plano-servico">Cadastro de Serviços</button>
+                        <button class="dropdown-item" routerLink="/listar/servicos/plano">Lista de Serviços</button>
+                    </div>
+                </div>
+                <!--PROFISSIONAIS-->
+                <div *ngIf="(role == 'Admin')" ngbDropdown class="item-menu-dropdown">
+                    <button class="item" id="profissionais" ngbDropdownToggle><i class="far fa-user item-icon"></i> Profissionais
+              <i class="fas fa-angle-down icon-down"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="profissionais">
+                        <button class="dropdown-item" routerLink="/profissionais">Gerenciar</button>
+                        <button class="dropdown-item" routerLink="/desativados">Desativados</button>
+                    </div>
+                </div>
+
+                <!--CLIENTES-->
+                <button *ngIf="(role == 'Admin')" class="item" routerLink="/clientes"><i class="far fa-user item-icon"></i>
+            Clientes </button>
+
+                <!--AGENDAMENTOS-->
+                <button *ngIf="(role == 'Admin')" class="item" routerLink="/agendamentos"><i
+              class="far fa-calendar-alt item-icon"></i> Agendamentos </button>
+
+                <!--GERENCIAR EMPRESAS E CONDOMINIOS -->
+                <div *ngIf="(role == 'Admin')" ngbDropdown class="item-menu-dropdown">
+                    <button class="item" id="profissionais" ngbDropdownToggle><i class="fas fa-briefcase item-icon"></i> Gerenciamento
+              <i class="fas fa-angle-down icon-down"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="profissionais">
+                        <button class="dropdown-item" routerLink="/empresas">Gerenciar Empresas </button>
+                        <button class="dropdown-item" routerLink="/desativados">Cadastrar Condomínios</button>
+                    </div>
+                </div>
+
+                <!--YOOLO CLUB -->
+                <div *ngIf="(role == 'Admin')" ngbDropdown class="item-menu-dropdown">
+                    <button class="item" id="profissionais" ngbDropdownToggle><i class="fas fa-star item-icon"></i> Yoolo Club<i
+                class="fas fa-angle-down icon-down"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="profissionais">
+
+                        <button class="dropdown-item" routerLink="/empresas/parceira">Empresas Parceiras</button>
+                        <button class="dropdown-item" routerLink="/area-partner">Área de Atuação</button>
+                    </div>
+                </div>
+
+                 <!--VALIDAR TOKEN -->
+                 <button *ngIf="(role == 'Admin')" class="item" routerLink="/validar-codigo"><i
+                 class="fas fa-key item-icon"></i> Validação de Token </button>
+
+                <!--MARKETING -->
+                <div *ngIf="(role == 'Admin')" ngbDropdown class="item-menu-dropdown">
+                    <button class="item" id="profissionais" ngbDropdownToggle><i class="fas fa-bell item-icon"></i> Marketing<i
+                class="fas fa-angle-down icon-down"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="profissionais">
+                        <button class="dropdown-item" routerLink="/notificacoes">Push Notification</button>
+                    </div>
+                </div>
+
+                <!--ATENDIMENTO -->
+                <div *ngIf="(role == 'Admin')" ngbDropdown class="item-menu-dropdown">
+                    <button class="item" id="profissionais" ngbDropdownToggle><i
+                class="fas fa-comment item-icon"></i>Atendimento<i class="fas fa-angle-down icon-down"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="profissionais">
+
+                        <button class="dropdown-item" routerLink="/chat">Bate-Papo</button>
+                    </div>
+                </div>
+
+                <!--FINANCEIRO -->
+                <div *ngIf="(role == 'Admin')" ngbDropdown class="item-menu-dropdown">
+                    <button class="item" id="profissionais" ngbDropdownToggle><i class="fas fa-dollar-sign item-icon"></i>
+              Financeiro <i class="fas fa-angle-down icon-down"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="profissionais">
+                        <button class="dropdown-item" routerLink="/pagamento">Formas de Pagamento</button>
+                        <button class="dropdown-item" routerLink="/transacoes">Relatórios</button>
+                    </div>
+                </div>
+
+                <!--CONFIGURAÇÕES-->
+                <div *ngIf="(role == 'Admin')" ngbDropdown class="item-menu-dropdown">
+                    <button class="item" id="configuracoes" ngbDropdownToggle><i class="fas fa-cog item-icon"></i>Configurações<i
+                class="fas fa-angle-down icon-down"></i></button>
+                    <div ngbDropdownMenu aria-labelledby="configuracoes">
+                        <button class="dropdown-item" routerLink="/category-produtos/cadastrar">Cadastrar Serviços</button>
+                        <button class="dropdown-item" routerLink="/produtos">Categoria de Serviços</button>
+                        <button class="dropdown-item" routerLink="/configuracoes">Adicionar Serviços</button>
+                        <button class="dropdown-item" routerLink="/configuracoes">Cupons</button>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+    <div class="main">
+        <ng-content></ng-content>
+    </div>
+</div>

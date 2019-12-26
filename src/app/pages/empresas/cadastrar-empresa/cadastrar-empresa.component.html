@@ -1,0 +1,786 @@
+<form #companyForm="ngForm">
+  <app-layout>
+
+    <h2>Empresas<i class="fas fa-angle-right"></i> <span>{{ !modoAlteracao ? 'Cadastrar' : 'Editar'}}</span></h2>
+
+    <p *ngFor="let alert of alerts">
+      <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+    </p>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <!--DADOS PESSOAIS-->
+
+    <div class="card-body">
+      <h6 class="title-page">Cadastro</h6>
+      <span class="info-form">Dados</span>
+      <div class="container-form">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nome do sócio:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="patternName" required maxlength="150"
+              #ctrlPatternName="ngModel" [(ngModel)]="company.patternName">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nome fantasia:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="fantasyName" required maxlength="100"
+              #ctrlfantasyName="ngModel" [(ngModel)]="company.fantasyName" (change)="generateAcessCode()">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">CNPJ:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="cnpj" required #ctrlCnpj="ngModel" maxlength="18"
+              mask='00.000.000/0000-00' [(ngModel)]="company.cnpj">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Contatos:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="contacts" #ctrlContacts="ngModel"
+              [(ngModel)]="company.contact" mask='{{maskPhone}}' (keydown)="onKeydownPhone($event)">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">E-mail:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="email" required #ctrlEmail="ngModel"
+              [(ngModel)]="company.email" max="100">
+          </div>
+        </div>
+      </div>
+      <!--CONFIGURAÇÕES-->
+      <hr class="line-detail">
+      <span class="info-form">Configurações</span>
+      <!--TABS: AVULSO-->
+      <ngb-tabset type="pills" class="component-mensagens">
+        <ngb-tab>
+          <ng-template ngbTabTitle>
+            <div>Avulso</div>
+          </ng-template>
+          <ng-template ngbTabContent>
+            <div class="container-form">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Qtd. funcionários:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="qtdeEmploy" #ctrlQtdeEmploy="ngModel"
+                    [(ngModel)]="company.qtdEmployes" mask='0000000000' maxlength="10">
+                </div>
+              </div>
+              <div class="form-group row">
+                <!--HORÁRIOS E DIAS DE ATENDIMENTO-->
+                <label class="col-sm-3 col-form-label">Dias dos atendimentos:</label>
+                <div class="col-sm-2">
+                  <select name="attDay" class="form-control" #ctrlAttDay="ngModel" [(ngModel)]="attendanceDaySelected">
+                    <option value="segunda">Segunda-feira</option>
+                    <option value="terca">Terça-feira</option>
+                    <option value="quarta">Quarta-feira</option>
+                    <option value="quinta">Quinta-feira</option>
+                    <option value="sexta">Sexta-feira</option>
+                    <option value="sabado">Sábado</option>
+                    <option value="domingo">Domingo</option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <select name="hourAttendanceIni" class="form-control" #ctrlHourArrendanceIni="ngModel"
+                    [(ngModel)]="hourAttendanceIni">
+                    <option value="08:00">08:00</option>
+                    <option value="08:30">08:30</option>
+                    <option value="09:00">09:00</option>
+                    <option value="09:30">09:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                  </select>
+                </div>
+                <div class="col-sm-1">
+                  <span class="center-text-form">ÀS</span>
+                </div>
+                <div class="col-sm-2">
+                  <select name="hourAttendanceEnd" class="form-control" #ctrlHourAttendanceEnd="ngModel"
+                    [(ngModel)]="hourAttendanceEnd">
+                    <option value="08:00">08:00</option>
+                    <option value="08:30">08:30</option>
+                    <option value="09:00">09:00</option>
+                    <option value="09:30">09:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-add-form" (click)="addAttendanceDay()">Adicionar</button>
+                </div>
+              </div>
+              <div class="itens-adicionados">
+                <div class="row">
+                  <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="itens">
+                      <span *ngFor="let day of attendanceDays">{{day.nameDay}} ({{day.hourInit}} - {{day.hourEnd}})<i
+                          class="fas fa-times" (click)="remove(attendanceDays,day)"></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--CATEGORIA DE PRODUTOS-->
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Categorias:</label>
+                <div class="col-sm-7">
+                  <select name="categorie" class="form-control" #ctrlCtegory="ngModel" [(ngModel)]="categorySel">
+                    <option *ngFor="let category of categoryProducts" [ngValue]="category">
+                      {{category.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-add-form" (click)="addCategory()">Adicionar</button>
+                </div>
+              </div>
+              <!--CATEGORIAS ADICIONADAS-->
+              <div class="itens-adicionados">
+                <div class="row">
+                  <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="itens">
+                      <span *ngFor="let category of categoriesProductsSelected">{{category.name}} <i
+                          class="fas fa-times"
+                          (click)="remove(categoriesProductsSelected, category);loadListProducts(category);"></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item-destaque">
+                <div class="form-group row">
+                  <!--SERVIÇOS FORNECIDOS-->
+                  <label class="col-sm-3 col-form-label">Serviços:</label>
+                  <div class="col-sm-3">
+                    <select name="productServices" class="form-control" #ctrlProductService="ngModel"
+                      [(ngModel)]="productSel">
+                      <option *ngFor="let product of products" [ngValue]="product">{{product.name}}</option>
+                    </select>
+                  </div>
+                  <!--QUANTIDADE DE PESSOAS POR SERVIÇO-->
+                  <label class="col-sm-2 col-form-label center">QTD de Pessoas:</label>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control" name="qtdClients" #ctrlQtdClients="ngModel"
+                      [(ngModel)]="qtdClients" mask='000'>
+                  </div>
+                  <div class="col-sm-2 d-flex align-items-center padding-zero">
+                    <input type="checkbox" [(ngModel)]="orMore" data-md-icheck name="orMore" #ctrlOrMore="ngModel"
+                      (change)="toggleVisibility($event)" />
+                    <span class="col-form-label" style="margin-left: 12px;">Ou mais</span>
+                  </div>
+                </div>
+                <!--DESCONTOS-->
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Desconto:</label>
+                  <div class="col-sm-7">
+                    <select name="discount" class="form-control" #ctrlDiscount="ngModel" [(ngModel)]="discountSel">
+                      <option value="5">5%</option>
+                      <option value="10">10%</option>
+                      <option value="15">15%</option>
+                      <option value="20">20%</option>
+                      <option value="25">25%</option>
+                      <option value="30">30%</option>
+                      <option value="35">35%</option>
+                      <option value="40">40%</option>
+                      <option value="45">45%</option>
+                      <option value="50">50%</option>
+                      <option value="55">55%</option>
+                      <option value="60">60%</option>
+                      <option value="65">65%</option>
+                      <option value="70">70%</option>
+                      <option value="75">75%</option>
+                      <option value="80">80%</option>
+                      <option value="85">85%</option>
+                      <option value="90">90%</option>
+                      <option value="95">95%</option>
+                      <option value="100">100%</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <button class="btn btn-add-form" (click)="addServiceAndDiscount()">Adicionar</button>
+                  </div>
+                </div>
+                <div class="itens-adicionados">
+                  <div class="row">
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="itens">
+                        <span *ngFor="let serviceDiscount of servicesDiscountsSelected">
+                          {{serviceDiscount.name}} para {{ serviceDiscount.qtdClients }} Pessoas
+                          {{serviceDiscount.orMore ? 'ou mais' : ''}} ({{serviceDiscount.discount}}% off) <i
+                            class="fas fa-times"
+                            (click)="remove(servicesDiscountsSelected, serviceDiscount)"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--PROFISSIONAIS-->
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Profissionais:</label>
+                <div class="col-sm-7">
+                  <select name="profissional" class="form-control" #ctrlProfessional="ngModel"
+                    [(ngModel)]="professionalSel">
+                    <option *ngFor="let professional of professionals" [ngValue]="professional">
+                      {{professional.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-add-form" (click)="addProfessionals()">Adicionar</button>
+                </div>
+              </div>
+              <!--PROFISSIONAIS:TAGS = ITENS-->
+              <div class="itens-adicionados">
+                <div class="row">
+                  <div class="col-sm-9">
+                    <div class="itens">
+                      <span *ngFor="let item of professionalsAttendenceSelected">{{item.name}} <i class="fas fa-times"
+                          (click)="remove(professionalsAttendenceSelected, item)"></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <!--TABS: PLANO DE ASSINATURA-->
+          <ng-template ngbTabTitle>
+            <div class="title-tab-plano">Plano de Assinatura</div>
+          </ng-template>
+          <ng-template ngbTabContent>
+            <div class="container-form">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Planos:</label>
+                <div class="col-sm-7">
+                  <select name="plan" class="form-control" #ctrlCategoryPlan="ngModel" [(ngModel)]="categoryPlanSel">
+                    <option *ngFor="let plan of categoryPlan" [ngValue]="plan">
+                      {{plan.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-add-form" (click)="addPlanCategory()">Adicionar</button>
+                </div>
+                <div class="itens-adicionados">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="itens">
+                        <span *ngFor="let plan of categoriesPlanSelected">{{plan.name}} <i class="fas fa-times"
+                            (click)="remove(categoriesPlanSelected, plan);loadListProductsPlan(plan);"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--ITENS DENTRO DA CAIXA-->
+              <div class="item-destaque">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Serviços:</label>
+                  <div class="col-sm-3">
+                    <select class="form-control" name="productPlanServices" class="form-control" #ctrlProductPlanService="ngModel"
+                    [(ngModel)]="productPlanSel">
+                      <option *ngFor="let productsplan of productsplan" [ngValue]="productsplan">{{productsplan.name}}</option>
+                    </select>
+                  </div>
+                  <label class="col-sm-2 col-form-label">QTD de pessoas:</label>
+                  <div class="col-sm-3">
+                    <input name="qtdPessoas" class="form-control" name="qtdClients" #ctrlQtdClients="ngModel"
+                    [(ngModel)]="qtdClients" mask='000'>
+                  </div>
+                </div>
+                <!--INPUTS DE PERIODO E DIA-->
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Especificar por:</label>
+                  <div class="col-sm-3">
+                    <label class="col-form-label col-sm-8">Período:</label>
+                    <input type="radio" id="periodo" name="tempo" value="op1" (click)="mudaDiv2($event)">
+                  </div>
+                  <div class="col-sm-4">
+                    <label class="col-sm-10 col-form-label">Dia:</label>
+                    <input  type="radio" name="dia" name="tempo" value="op2" (click)="mudaDiv($event)">
+                  </div>
+                </div>
+                <br>
+                <div *ngIf="addPeriodo">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Período:</label>
+                  <div class="col-sm-3">
+                    <select name="data" class="form-control" #ctrlDate="ngModel" [(ngModel)]="Data">
+                      <option>1°semana</option>
+                      <option>2°semana</option>
+                      <option>3°semana</option>
+                      <option>4°semana</option>
+                    </select>
+                  </div>
+                  <label class="col-sm-2 col-form-label">Dia:</label>
+                  <div class="col-sm-3">
+                      <select name="attDay" class="form-control" #ctrlAttDay="ngModel" [(ngModel)]="attendanceDaySelected">
+                          <option value="segunda">Segunda-feira</option>
+                          <option value="terca">Terça-feira</option>
+                          <option value="quarta">Quarta-feira</option>
+                          <option value="quinta">Quinta-feira</option>
+                          <option value="sexta">Sexta-feira</option>
+                          <option value="sabado">Sábado</option>
+                          <option value="domingo">Domingo</option>
+                        </select>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Horário inicial:</label>
+                  <div class="col-sm-2">
+                    <select name="hourAttendanceIni" class="form-control" #ctrlHourArrendanceIni="ngModel"
+                      [(ngModel)]="hourAttendanceIni">
+                      <option value="08:00">08:00</option>
+                      <option value="08:30">08:30</option>
+                      <option value="09:00">09:00</option>
+                      <option value="09:30">09:30</option>
+                      <option value="10:00">10:00</option>
+                      <option value="10:30">10:30</option>
+                      <option value="11:00">11:00</option>
+                      <option value="11:30">11:30</option>
+                      <option value="12:00">12:00</option>
+                      <option value="13:00">13:00</option>
+                      <option value="13:30">13:30</option>
+                      <option value="14:00">14:00</option>
+                      <option value="14:30">14:30</option>
+                      <option value="15:00">15:00</option>
+                      <option value="15:30">15:30</option>
+                      <option value="16:00">16:00</option>
+                      <option value="16:30">16:30</option>
+                      <option value="17:00">17:00</option>
+                      <option value="17:30">17:30</option>
+                      <option value="18:00">18:00</option>
+                      <option value="18:30">18:30</option>
+                      <option value="19:00">19:00</option>
+                      <option value="19:30">19:30</option>
+                      <option value="20:00">20:00</option>
+                    </select>
+                  </div>
+                  <label class="col-sm-3 col-form-label">Horário final:</label>
+                  <div class="col-sm-2">
+                    <select name="hourAttendanceEnd" class="form-control" #ctrlHourAttendanceEnd="ngModel"
+                      [(ngModel)]="hourAttendanceEnd">
+                      <option value="08:00">08:00</option>
+                      <option value="08:30">08:30</option>
+                      <option value="09:00">09:00</option>
+                      <option value="09:30">09:30</option>
+                      <option value="10:00">10:00</option>
+                      <option value="10:30">10:30</option>
+                      <option value="11:00">11:00</option>
+                      <option value="11:30">11:30</option>
+                      <option value="12:00">12:00</option>
+                      <option value="13:00">13:00</option>
+                      <option value="13:30">13:30</option>
+                      <option value="14:00">14:00</option>
+                      <option value="14:30">14:30</option>
+                      <option value="15:00">15:00</option>
+                      <option value="15:30">15:30</option>
+                      <option value="16:00">16:00</option>
+                      <option value="16:30">16:30</option>
+                      <option value="17:00">17:00</option>
+                      <option value="17:30">17:30</option>
+                      <option value="18:00">18:00</option>
+                      <option value="18:30">18:30</option>
+                      <option value="19:00">19:00</option>
+                      <option value="19:30">19:30</option>
+                      <option value="20:00">20:00</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <button class="btn btn-add-form" (click)="addAttendanceDay()">Adicionar</button>
+                  </div>
+                </div>
+                <div class="itens-adicionados">
+                  <div class="row">
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="itens">
+                        <span *ngFor="let day of attendanceDays">{{productsplan}} - {{day.nameDay}} {{day.Data}} ({{day.hourInit}} -
+                          {{day.hourEnd}})<i class="fas fa-times" (click)="remove(attendanceDays,day)"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="addDia" id="addDia" *ngIf="addDia">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Dia:</label>
+                  <div class="col-sm-3">
+                    <select name="attDay" class="form-control" #ctrlAttDay="ngModel" [(ngModel)]="attendanceDaySelected">
+                      <option value="segunda">Segunda-feira</option>
+                      <option value="terca">Terça-feira</option>
+                      <option value="quarta">Quarta-feira</option>
+                      <option value="quinta">Quinta-feira</option>
+                      <option value="sexta">Sexta-feira</option>
+                      <option value="sabado">Sábado</option>
+                      <option value="domingo">Domingo</option>
+                    </select>
+                  </div>
+                  <label class="col-sm-2 col-form-label">Data:</label>
+                  <div class="col-sm-3">
+                      <input type="date" name="Data" class="form-control" #ctrlDate="ngModel" [(ngModel)]="Data">
+                  </div>
+                </div>
+                <br>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Horário inicial:</label>
+                  <div class="col-sm-2">
+                    <select name="productServices" class="form-control">
+                      <option value="08:00">08:00</option>
+                      <option value="08:30">08:30</option>
+                      <option value="09:00">09:00</option>
+                      <option value="09:30">09:30</option>
+                      <option value="10:00">10:00</option>
+                      <option value="10:30">10:30</option>
+                      <option value="11:00">11:00</option>
+                      <option value="11:30">11:30</option>
+                      <option value="12:00">12:00</option>
+                      <option value="13:00">13:00</option>
+                      <option value="13:30">13:30</option>
+                      <option value="14:00">14:00</option>
+                      <option value="14:30">14:30</option>
+                      <option value="15:00">15:00</option>
+                      <option value="15:30">15:30</option>
+                      <option value="16:00">16:00</option>
+                      <option value="16:30">16:30</option>
+                      <option value="17:00">17:00</option>
+                      <option value="17:30">17:30</option>
+                      <option value="18:00">18:00</option>
+                      <option value="18:30">18:30</option>
+                      <option value="19:00">19:00</option>
+                      <option value="19:30">19:30</option>
+                      <option value="20:00">20:00</option>
+                    </select>
+                  </div>
+                  <label class="col-sm-3 col-form-label">Horário final:</label>
+                  <div class="col-sm-2">
+                    <select name="productServices" class="form-control">
+                      <option value="08:00">08:00</option>
+                      <option value="08:30">08:30</option>
+                      <option value="09:00">09:00</option>
+                      <option value="09:30">09:30</option>
+                      <option value="10:00">10:00</option>
+                      <option value="10:30">10:30</option>
+                      <option value="11:00">11:00</option>
+                      <option value="11:30">11:30</option>
+                      <option value="12:00">12:00</option>
+                      <option value="13:00">13:00</option>
+                      <option value="13:30">13:30</option>
+                      <option value="14:00">14:00</option>
+                      <option value="14:30">14:30</option>
+                      <option value="15:00">15:00</option>
+                      <option value="15:30">15:30</option>
+                      <option value="16:00">16:00</option>
+                      <option value="16:30">16:30</option>
+                      <option value="17:00">17:00</option>
+                      <option value="17:30">17:30</option>
+                      <option value="18:00">18:00</option>
+                      <option value="18:30">18:30</option>
+                      <option value="19:00">19:00</option>
+                      <option value="19:30">19:30</option>
+                      <option value="20:00">20:00</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <button class="btn btn-add-form" (click)="addPlanCategory()">Adicionar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <br>
+        <br>
+        <br>
+        <br>
+      </ngb-tabset>
+      <!--PAGAMENTO-->
+      <hr class="line-detail">
+      <span class="info-form">Pagamento</span>
+      <!--TAB : EMPRESA-->
+      <ngb-tabset type="pills" class="component-mensagens">
+        <ngb-tab title="Empresa">
+          <ng-template ngbTabContent>
+            <div class="container-form">
+              <br>
+              <br>
+              <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Inclui:</label>
+                  <div class="col-sm-3">
+                    <label class="col-form-label col-sm-9">Avulso:</label>
+                    <input type="checkbox">
+                  </div>
+                  <div class="col-sm-3">
+                    <label class="col-sm-9 col-form-label">Planos:</label>
+                    <input type="checkbox">
+                  </div>
+                </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Crédito:</label>
+                <div class="col-sm-3">
+                  <label class="col-form-label col-sm-8">Sim:</label>
+                  <input type="checkbox" (click)="addInput($event)">
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="valorFunc">
+                <div  class="col-sm-6">
+                  <label class="col-sm-8 col-form-label">Valor por funcionário:</label>
+                  <input class="form-control" type="text">
+                </div>
+                </div>
+              <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Valor total à pagar:</label>
+                  <div class="col-sm-6">
+                    <input name="categorie" class="form-control" #ctrlValue="ngModel" [(ngModel)]="valorTotalSel">
+                  </div>
+                  <div class="col-sm-2">
+                    <button class="btn btn-add-form" (click)="addValorTotal()">Adicionar</button>
+                  </div>
+                </div>
+                <div class="itens-adicionados">
+                  <div class="row">
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="itens">
+                        <span *ngFor="let category of valueTotalSelected"><i
+                            class="fas fa-times"
+                            (click)="removeTeste(valueTotalSelected, category);"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <!--ITEM DESTAQUE-->
+              <div class="item-destaque">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Subsídio da empresa:</label>
+                  <div class="col-sm-3">
+                    <label class="col-form-label col-sm-7">Integral:</label>
+                    <input type="radio">
+                  </div>
+                  <label class="col-form-label col-sm-2">Parcial:</label>
+                  <div class="col-sm-3">
+                    <input class="form-control" type="text">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Forma de pagamento (funcionário):</label>
+                  <div class="col-sm-4">
+                    <label class="col-form-label col-sm-9">Folha de pagamento:</label>
+                    <input type="radio">
+                  </div>
+                  <div class="col-sm-4">
+                    <label class="col-sm-10 col-form-label">Cartão de crédito/débito:</label>
+                    <input type="radio">
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Data de vencimento:</label>
+                <div class="col-sm-3">
+                  <input type="date" class="form-control">
+                </div>
+                <label class="col-sm-2 col-form-label">E-mail de cobrança:</label>
+                <div class="col-sm-3">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <br>
+              <br>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <!--TAB : FUNCIONARIO-->
+        <ngb-tab title="Funcionário">
+          <ng-template ngbTabContent>
+            <div class="container-form">
+              <br>
+              <br>
+              <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Inclui:</label>
+                  <div class="col-sm-3">
+                    <label class="col-form-label col-sm-9">Avulso:</label>
+                    <input type="checkbox">
+                  </div>
+                  <div class="col-sm-3">
+                    <label class="col-sm-9 col-form-label">Planos:</label>
+                    <input type="checkbox">
+                  </div>
+                </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Valor Fixo:</label>
+                <div class="col-sm-3">
+                  <label class="col-form-label col-sm-8" >Sim:</label>
+                  <input type="checkbox" (click)="addInput($event)">
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="valorFunc">
+                <div class="col-sm-6">
+                  <label class="col-sm-8 col-form-label">Valor fixo por mês:</label>
+                  <input class="form-control"  type="text">
+                </div>
+                </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Valor total à pagar:</label>
+                <div class="col-sm-6">
+                  <input name="categorie" class="form-control" #ctrlValue="ngModel" [(ngModel)]="valorTotalSel">
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-add-form" (click)="addValorTotal()">Adicionar</button>
+                </div>
+              </div>
+              <div class="itens-adicionados">
+                <div class="row">
+                  <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-9">
+                    <div class="itens">
+                      <span *ngFor="let category of valueTotalSelected"><i
+                          class="fas fa-times"
+                          (click)="removeTeste(valueTotalSelected, category);"></i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--ITEM DESTAQUE-->
+              <div class="item-destaque">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Subsídio da empresa:</label>
+                  <div class="col-sm-3">
+                    <label class="col-form-label col-sm-7">Integral:</label>
+                    <input type="radio">
+                  </div>
+                  <label class="col-form-label col-sm-2">Parcial:</label>
+                  <div class="col-sm-3">
+                    <input class="form-control" type="text">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Forma de pagamento (funcionário):</label>
+                  <div class="col-sm-4">
+                    <label class="col-form-label col-sm-9">Folha de pagamento:</label>
+                    <input type="radio">
+                  </div>
+                  <div class="col-sm-4">
+                    <label class="col-sm-10 col-form-label">Cartão de crédito/débito:</label>
+                    <input type="radio">
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Data de vencimento:</label>
+                <div class="col-sm-3">
+                  <input type="date" class="form-control">
+                </div>
+                <label class="col-sm-2 col-form-label">E-mail de cobrança:</label>
+                <div class="col-sm-3">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+
+              <br>
+              <br>
+            </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+
+      <!--ENDEREÇO-->
+      <hr class="line-detail">
+      <span class="info-form">Endereço</span>
+      <div class="container-form">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Local de atendimento:</label>
+          <div class="col-sm-9">
+            <input #endereco autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
+              name="endereco" #ctrlEndereco="ngModel" class="form-control" [(ngModel)]="company.endereco"
+              maxlength="200">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Complemento:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="complement" #ctrlComplement="ngModel"
+              [(ngModel)]="company.complement" maxlength="200">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">CEP:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="cep" #ctrlCep="ngModel" [(ngModel)]="company.cep"
+              maxlength="9" mask="00000-000">
+          </div>
+        </div>
+        <div class="row justify-content-end">
+          <div class="col-sm-9">
+            <div id="gmap" #gmap style='width:100%;height:200px'></div>
+          </div>
+        </div>
+      </div>
+      <hr class="line-detail">
+      <span class="info-form">Código de acesso</span>
+      <div class="container-form">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Código de acesso:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="acessCode" #ctrlAcessCode="ngModel"
+              [(ngModel)]="company.acessCode" maxlength="50">
+          </div>
+        </div>
+      </div>
+      <div class="bottom-card">
+        <button class="btn btn-cancel-form" (click)="cancel()">Cancelar</button>
+        <button class="btn btn-save-form" (click)="save()">Salvar</button>
+      </div>
+    </div>
+  </app-layout>
+</form>

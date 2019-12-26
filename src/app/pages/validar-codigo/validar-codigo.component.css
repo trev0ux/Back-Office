@@ -1,0 +1,71 @@
+.content-token{
+  max-width: 550px;
+  margin: 100px auto;
+}
+
+.content-token .btn-confirm{
+  width: 100%;
+  height: 48px;
+  max-width: 115px;
+  background: #00BCD4;
+  color: white;
+  font-size: 14px;
+}
+
+.pdL0 {
+  padding-left: 0px;
+}
+
+.content-token .form-control {
+  font-size: 14px;
+  height: 48px;
+  background: #f7f7f7
+}
+
+.content-token-validate h3{
+  color: #31363f;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+
+.content-token-validate p{
+  font-size: 14px;
+  color: #444;
+  font-weight: 500;
+}
+
+.content-token-validate span{
+  color: #717171;
+  font-size: 13px;
+  padding-left: 5px;
+  font-weight: 400;
+}
+
+.content-token-validate .btn-cancelar{
+  padding: 8px 20px;
+  float: left;
+  background: #dadada;
+  color: #696969;
+  font-size: 15px;
+}
+
+.content-token-validate .btn-confirmar{
+  padding: 8px 20px;
+  float: right;
+  background: #6cad21;
+  color: #fff;
+  font-size: 15px;
+}
+
+.content-token-validate .options{
+  min-height: 70px;
+  padding-top: 25px;
+}
+
+.content-token-validate h2{
+  float: right;
+  margin-top: 15px;
+  padding-right: 10px;
+}

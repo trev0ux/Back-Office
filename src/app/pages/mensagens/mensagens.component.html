@@ -1,0 +1,160 @@
+<app-layout>
+  <h2>Chat | Mensagens <i class="fas fa-angle-right"></i> <span>Gerenciar</span></h2>
+  <div class="card-body">
+    <h2 class="filtro">Filtros</h2>
+    <ngb-tabset type="pills" class="component-mensagens">
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <div (click)="resetChat()">Clientes</div>
+        </ng-template>
+
+        <ng-template ngbTabContent>
+          <div class="lista-mensagens">
+            <h5>Mensagens</h5>
+            <!--ul>
+              <li><img src="../../../assets/images/default-user.png" alt=""> <span>Maria Eduarda</span></li>
+              <li class="selecionado"><img src="../../../assets/images/default-user.png" alt=""> <span>Marcela Souza</span></li>
+              <li><img src="../../../assets/images/default-user.png" alt=""> <span>Priscila Oliveira</span></li>
+              <li><img src="../../../assets/images/default-user.png" alt=""> <span>Gabriela Santos</span></li>
+            </ul-->
+
+            <ul *ngFor="let client of clients">
+              <li *ngIf="client" (click)="loadHistory(client)">
+                <img src="../../../assets/images/default-user.png" alt=""><span>{{client.name}}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="campo-mensagem">
+            <div class="topo">
+                <img src="../../../assets/images/default-user.png" alt=""> <span *ngIf="currentContact">{{currentContact.name}}</span>
+            </div>
+            <div class="mensagens">
+              <h5 class="data-inicio">Hoje</h5>
+              
+              <!-- Item mensagem recebida -->
+              <!--div class="mensagem recebida">
+                <h2>Marcela Souza</h2>
+                <p class="texto">
+                  Olá, como faço para cancelar?
+                </p>
+                <span class="data">06/04/2019 ás 19:40</span>
+              </div-->
+              <!-- Item mensagem recebida -->
+              
+              <!-- Item mensagem Enviada -->
+              <!--div class="mensagem enviada">
+                <h2>Yoolo</h2>
+                <p class="texto">
+                  Olá, bom dia. Será um prazer te atender.
+                </p>
+                <span class="data">06/04/2019 ás 19:40</span>
+              </div-->
+              <!-- Item mensagem Enviada -->
+
+               <!-- Item mensagem Enviada -->
+              <!--div class="mensagem enviada">
+                <h2>Yoolo</h2>
+                <p class="texto">
+                  Pelo app tem a opção de cancelamento.
+                </p>
+                <span class="data">06/04/2019 ás 19:41</span>
+              </div-->
+              <!-- Item mensagem Enviada -->
+
+              <div *ngFor="let historyMessage of historyMessages">
+                <div *ngIf="historyMessage" class="mensagem recebida">
+                  <h2>{{historyMessage.sender}}</h2>
+                  <p class="texto">{{historyMessage.content}}</p>
+                  <span class="data">{{historyMessage.date}}</span>
+                </div>
+              </div>
+
+              <div *ngFor="let message of currentMessages">
+                <div *ngIf="shouldDisplayMessage(message)" class="mensagem enviada">
+                  <h2>{{message.sender}}</h2>
+                  <p class="texto">{{message.content}}</p>
+                  <span class="data">{{message.date}}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="campo-digitar-mensagem">
+              <textarea [(ngModel)]="typedMessage"></textarea>
+              <button (click)="send('CLIENT')" class="btn">Enviar</button>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>
+          <div (click)="resetChat()">Profissionais</div>
+        </ng-template>
+        
+          <ng-template ngbTabContent>
+            <div class="lista-mensagens">
+            <h5>Mensagens</h5>
+            <!--ul>
+              <li><img src="../../../assets/images/default-user.png" alt=""> <span>Fernando Martins</span></li>
+              <li class="selecionado"><img src="../../../assets/images/default-user.png" alt=""> <span>Marcela Teixeira</span></li>
+            </ul-->
+
+            <ul *ngFor="let professional of professionals">
+              <li *ngIf="professional" (click)="loadHistory(professional)">
+                <img src="../../../assets/images/default-user.png" alt=""><span>{{professional.name}}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="campo-mensagem">
+            <div class="topo">
+                <img src="../../../assets/images/default-user.png" alt=""> <span *ngIf="currentContact">{{currentContact.name}}</span>
+            </div>
+            <div class="mensagens">
+              <h5 class="data-inicio">Hoje</h5>
+              
+              <!-- Item mensagem recebida -->
+              <!--div class="mensagem recebida">
+                <h2>Marcela Teixeira</h2>
+                <p class="texto">
+                  Olá, como faço para cancelar?
+                </p>
+                <span class="data">06/04/2019 ás 19:40</span>
+              </div-->
+              <!-- Item mensagem recebida -->
+              
+              <!-- Item mensagem Enviada -->
+              <!--div class="mensagem enviada">
+                <h2>Yoolo</h2>
+                <p class="texto">
+                  Olá, bom dia. Será um prazer te atender.
+                </p>
+                <span class="data">06/04/2019 ás 19:40</span>
+              </div-->
+              <!-- Item mensagem Enviada -->
+
+              <div *ngFor="let historyMessage of historyMessages">
+                <div *ngIf="historyMessage" class="mensagem recebida">
+                  <h2>{{historyMessage.sender}}</h2>
+                  <p class="texto">{{historyMessage.content}}</p>
+                  <span class="data">{{historyMessage.date}}</span>
+                </div>
+              </div>
+
+              <div *ngFor="let message of currentMessages">
+                <div *ngIf="shouldDisplayMessage(message)" class="mensagem enviada">
+                  <h2>{{message.sender}}</h2>
+                  <p class="texto">{{message.content}}</p>
+                  <span class="data">{{message.date}}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="campo-digitar-mensagem">
+              <textarea [(ngModel)]="typedMessage"></textarea>
+              <button (click)="send('PROFESSIONAL')" class="btn">Enviar</button>
+            </div>
+          </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </app-layout>

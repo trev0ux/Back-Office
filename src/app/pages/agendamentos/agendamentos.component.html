@@ -1,0 +1,427 @@
+<app-layout>
+  <h2>Agendamentos <i class="fas fa-angle-right"></i> <span>Gerenciar</span></h2>
+  <div class="card-body">
+    <ngb-tabset>
+      <ngb-tab title="Domicilio">
+        <ng-template ngbTabContent>
+          <br>
+          <br>
+          <h3>Agendamentos a domicílio</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Nome do cliente</th>
+                  <th scope="col">Local de atendimento</th>
+                  <th scope="col">Código</th>
+                  <th scope="col">Aceito</th>
+                  <th scope="col" class="center">Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let eventItem of eventsHome">
+                  <td>{{eventItem.client.name}}</td>
+                  <td>{{eventItem.adress}}</td>
+                  <td>{{eventItem.uniqueId}}</td>
+                  <td>{{eventItem.status}}</td>
+                  <td class="center">
+                    <div class="options"><i class="fas fa-pencil-alt editar"></i> <i class="fas fa-search ver"></i>
+                    </div>
+                  </td>
+                </tr>
+                <!--tr>
+                                    <td>Felipe Moura</td>
+                                    <td>Hub Salvador</td>
+                                    <td>30C23</td>
+                                    <td>Aceito</td>
+                                    <td class="center"><div class="options"><i class="fas fa-pencil-alt editar"></i> <i class="fas fa-search ver" (click)="openLg(content)"></i></div></td>
+                                </tr-->
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>Corporativo</ng-template>
+        <ng-template ngbTabContent>
+          <br>
+          <br>
+          <h3>Agendamentos Corporativo</h3>
+
+          <div class="container-form">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Código:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="codigo" maxlength="50" #ctrlCodigo="ngModel"
+                  [(ngModel)]="codigo">
+              </div>
+            </div>
+          </div>
+
+          <button class="btn add" (click)="pesquisar()"><i class="fas fa-plus"></i> Pesquisar</button>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 20%">Nome do cliente</th>
+                  <th scope="col" style="width: 30%">Local de atendimento</th>
+                  <th scope="col" style="width: 25%">Código</th>
+                  <th scope="col" style="width: 15%">Aceito</th>
+                  <th scope="col" class="center" style="width: 10%">Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let eventItem of eventsCorporate">
+                  <td style="word-break: break-word;">{{eventItem.client[0]?.name}}</td>
+                  <td style="word-break: break-word;">
+                    {{ eventItem.empresa ? eventItem.empresa[0].attendanceLocation : eventItem.adress}}</td>
+                  <td style="word-break: break-word;">{{eventItem.uniqueId}}</td>
+                  <td style="word-break: break-word;">{{eventItem.status}}</td>
+                  <td class="center">
+                    <div class="options"><i class="fas fa-pencil-alt editar"></i> <i class="fas fa-search ver"
+                        (click)="listEvent(eventItem.uniqueId, content)"></i></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Avaliativo">
+        <ng-template ngbTabContent>
+          <br>
+          <br>
+          <h3>Agendamentos Avaliativos</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Nome do cliente</th>
+                  <th scope="col">Local de atendimento</th>
+                  <th scope="col">Código</th>
+                  <th scope="col">Aceito</th>
+                  <th scope="col" class="center">Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let eventItem of eventsAvaliate">
+                  <td>{{eventItem.client.name}}</td>
+                  <td>{{eventItem.adress}}</td>
+                  <td>{{eventItem.uniqueId}}</td>
+                  <td>{{eventItem.status}}</td>
+                  <td class="center">
+                    <div class="options"><i class="fas fa-pencil-alt editar"></i> <i class="fas fa-search ver"></i>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+
+</app-layout>
+<!--MODAL PARA DETALHAR AGENDAMENTO-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Detalhes do agendamento</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <ngb-tabset class="tab-modal border-0" *ngFor="let item of eventCorporate">
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <div>Local</div>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <div class="modal-body">
+          <div class="container-form">
+            <div class="form-group row">
+              <div class="col-sm-6">
+                <label class="col-sm-3 title-label">Empresa:</label>
+                <input type="text" class="form-control" name="empresa" placeholder="{{item.empresa[0].name}}">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-sm-4 title-label">Código:</label>
+                <div class="submit-line">
+                  <input type="text" class="form-control" name="codigo" placeholder="{{item.uniqueId}}">
+                  <button class="submit-lente" type="submit">
+                    <i class="fas fa-search ver"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-6">
+                <label class="col-sm-3 title-label">Endereço:</label>
+                <div class="submit-line">
+                  <input type="text" class="form-control" name="codigo" placeholder="{{item.adress}}">
+                  <button class="submit-lente" type="submit">
+                    <i class="fas fa-search ver"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label class="col-sm-2 title-label">CEP:</label>
+                <div class="submit-line">
+                  <input type="text" class="form-control" name="codigo" placeholder="{{item.cep}}">
+                  <button class="submit-lente" type="submit">
+                    <i class="fas fa-search ver"></i>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-6">
+                <label class="col-sm-3 title-label">Complemento:</label>
+                <input type="text" class="form-control" name="complemento">
+              </div>
+              <div class="col-sm-6">
+                <label class="col-sm-3 title-label">Referência:</label>
+                <input type="text" class="form-control" name="referencia" placeholder="{{item.referencia}}">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab class="border-0 ">
+      <ng-template ngbTabTitle>
+        <div>Atendimento</div>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <div class="container-form">
+          <div class="modal-body">
+            <div class="form-group row">
+              <div class="col-sm-6" *ngIf="item.client">
+                <label class="col-sm-3 title-label">Cliente:</label>
+                <div class="submit-line">
+                  <input class="form-control" name="codigo" *ngFor="let cliente of item.client"
+                    placeholder="{{cliente.name}}">
+                  <button (click)="listarClientes()" class="submit-lente" type="submit">
+                    <i class="fas fa-angle-down"></i>
+                  </button>
+                </div>
+                <div class="select" *ngIf="Clientes">
+                  <ul>
+                    <li class="list-select">
+                      <div class="item-li">
+                        <div>
+                          <img class="img-select" src="./assets/images/homem de terno.jpg">
+                        </div>
+                        <div>
+                          <a class="title-select" *ngFor="let cliente of item.client">{{cliente.name}}</a>
+                        </div>
+                        <div>
+                          <span class="status-select">
+                            {{item.status}}
+                          </span>
+                        </div>
+                        <a class="subtitle-select">{{item.startDate | date: 'dd/MM/yyyy H:mm'}} </a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="col-sm-8 status"><i></i>{{item.status}}</div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group row">
+              <div class="col-sm-6">
+                <label class="col-sm-6 title-label">Quem cancelou?</label>
+                <input type="text" class="form-control" name="empresa" placeholder="{{item.whoCancel}}">
+              </div>
+              <div class="col-sm-5">
+                <label class="col-sm-10 title-label">N° de integrantes:</label>
+                <input type="number" class="form-control" name="codigo" placeholder="{{item.qtdPessoas}}">
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group row">
+              <div class="col-sm-6" *ngIf="item?.professionalAttendence.length > 0">
+                <label class="col-sm-6 title-label">Profissional</label>
+                <input type="text" class="form-control" name="empresa" placeholder="{{item.empresa[0].name}}"
+                  placeholder="{{item?.professionalAttendence[0].name}}">
+              </div>
+              <td *ngIf="item?.professionalAttendence.length == 0">
+              </td>
+              <div class="col-sm-5">
+                <label class="col-sm-9 title-label">Data de Atendimento:</label>
+                <input type="date" class="form-control" name="codigo"
+                  placeholder="{{item.startDate | date: 'dd/MM/yyyy H:mm'}}">
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group row">
+              <div class="col-sm-6" *ngIf="item.payments">
+                <label class="col-sm-9 title-label">Forma de Pagamento:</label>
+                <input type="text" class="form-control" name="codigo" *ngFor="let pay of item.payments"
+                  placeholder="Cartão de crédito - R$ {{pay.valorPagamento}}">
+              </div>
+            <div class="col-sm-5" *ngIf="item.payments">
+              <label class="col-sm-10 title-label">Data de Pagamento:</label>
+              <input type="text" class="form-control" name="codigo" *ngFor="let pay of item.payments"
+                placeholder="{{pay.dataPagamento | date: 'dd/MM/yyyy H:mm'}}">
+            </div>
+          </div>
+          </div>
+          <br>
+          <br>
+        <div class="form-group row">
+          <div class="col-sm-6">
+            <label class="col-sm-9 title-label">Valor:</label>
+              <input type="text" class="form-control" name="codigo" placeholder="R$ {{item.products[0].valor}}">
+          </div>
+          <div class="col-sm-5">
+            <label class="col-sm-9 title-label">Desconto:</label>
+              <input type="text" class="form-control" name="codigo" placeholder="{{item.valorDesconto}}">
+            </div>
+          </div>
+        </div>
+        <div class="container-form">
+          <ul>
+            <li class="title-container">Observações do cliente</li>
+          </ul>
+          <div class="form-group row" *ngIf="item.avaliacao">
+            <div class="col-sm-6" *ngFor="let avaliation of item.avaliacao">
+              <h6>Lucas Amorim</h6>
+              <div class="item-destaque">
+                <p *ngIf="avaliation.observacao">
+                  {{avaliation.observacao}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab class="border-0">
+      <ng-template ngbTabTitle>
+        <div>Avaliação Profissional</div>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <br>
+        <br>
+        <div class="form-group row" *ngIf="item.avaliacao">
+          <div class="col-sm-6" *ngFor="let avaliation of item.avaliacao">
+            <h6></h6>
+            <span>Avaliado em</span>
+            {{avaliation.dataAvaliacao | date: 'dd/MM/yyyy H:mm'}}
+            <ngb-rating class="yellow-star" [rate]="5"></ngb-rating>
+            <div class="item-destaque">
+              <p *ngIf="avaliation.observacao">
+                {{avaliation.observacao}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</ng-template>
+
+
+<!-- <div class="modal-header">
+        <h4 class="modal-title">Detalhes do agendamento</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="detalhes-agendamento">
+            <table class="table table-striped" *ngFor="let item of eventCorporate">
+                <tr *ngIf="item.client">
+                    <th>Clientes</th>
+                    <td><p *ngFor="let cliente of item.client"> {{cliente.name}} - {{cliente.phone}} </p></td>
+                </tr>
+
+                <tr>
+                    <th>Profissional atendente</th>
+                    <td *ngIf="item?.professionalAttendence.length > 0">
+                        {{item?.professionalAttendence[0].name}}
+                    </td>
+                    <td *ngIf="item?.professionalAttendence.length == 0">
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nome da empresa</th>
+                    <td>{{item.empresa[0].name}}</td>
+                </tr>
+                <tr>
+                    <th>Código</th>
+                    <td>{{item.uniqueId}}</td>
+                </tr>
+                <tr>
+                    <th>Endereço</th>
+                    <td>{{item.adress}}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{item.status}}</td>
+                </tr>
+                <tr>
+                    <th>Serviço</th>
+                    <td>{{item.products[0].description}}</td>
+                </tr>
+                <tr>
+                    <th>Valor</th>
+                    <td>R$ {{item.products[0].valor}}</td>
+                </tr>
+                <tr>
+                    <th>Forma de pagamento</th>
+                    <td *ngIf="item.payments">
+                        <p *ngFor="let pay of item.payments">
+                            Cartão de crédito - R$ {{pay.valorPagamento}} - {{pay.dataPagamento | date: 'dd/MM/yyyy H:mm'}}
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Desconto</th>
+                    <td>{{item.valorDesconto}}</td>
+                </tr>
+                <tr>
+                    <th>Data e horário de atendimento</th>
+                    <td>{{item.startDate | date: 'dd/MM/yyyy H:mm'}}</td>
+                </tr>
+                <tr>
+                    <th>Quantidade de pessoas</th>
+                    <td>{{item.qtdPessoas}}</td>
+                </tr>
+                <tr>
+                    <th>Quem cancelou?</th>
+                    <td>
+                        {{item.whoCancel}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Avaliação do profissional</th>
+                    <td *ngIf="item.avaliacao">
+                        <p *ngFor="let avaliation of item.avaliacao">
+                            <span>Nota</span>
+                            {{avaliation.notaAvaliacao}},
+                            <span> Avaliado em </span>
+                            {{avaliation.dataAvaliacao | date: 'dd/MM/yyyy H:mm'}}
+                            <span *ngIf="avaliation.observacao"> - </span>
+                            {{avaliation.observacao}}
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Fechar</button>
+    </div> -->

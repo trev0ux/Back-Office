@@ -1,0 +1,288 @@
+<form #professionalForm="ngForm">
+    <app-layout>
+        <h2>Profissionais <i class="fas fa-angle-right"></i> <span>{{ !modoAlteracao ? 'Cadastrar' : 'Editar'}}</span></h2>
+
+        <p *ngFor="let alert of alerts">
+            <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+        </p>
+
+        <div class="card-body">
+            <h6 class="title-page">Cadastro</h6>
+            <span class="info-form">Dados</span>
+            <div class="container-form">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Nome completo:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="completeName" #ctrlCompleteName="ngModel" [(ngModel)]="professionalModel.name" maxlength="100">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">E-mail:</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" name="email" #ctrlEmail="ngModel" [(ngModel)]="professionalModel.email" maxlength="100">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Senha:</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" name="senha" #ctrlSenha="ngModel" [disabled]="modoAlteracao" [(ngModel)]="professionalModel.password" maxlength="50">
+                    </div>
+                </div>
+                <div class="form-group row" *ngIf="!modoAlteracao">
+                    <label class="col-sm-3 col-form-label">Confirmar Senha:</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" name="confirma_password" [disabled]="modoAlteracao" #ctrlConfirmPassword="ngModel" [(ngModel)]="professionalModel.confirma_password" maxlength="50">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label custom-label">Sexo:</label>
+                    <div class="col-sm-9">
+                        <select name="sexo" id="sexo" class="form-control" #ctrlSexo="ngModel" [(ngModel)]="professionalModel.sexo">
+            <option value="Feminino">Feminino</option>
+            <option value="Masculino">Masculino</option>
+          </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Data de Nascimento:</label>
+                    <div class="col-sm-9">
+                        <input type="date" placeholder="" class="form-control" name="dataNascimento" #ctrlDataNascimento="ngModel" [(ngModel)]="professionalModel.dataNascimento">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">RG:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="rg" #ctrlRg="ngModel" [(ngModel)]="professionalModel.rg" maxlength="11" mask='00000000000'>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">CPF:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="cpf" #ctrlCpf="ngModel" [(ngModel)]="professionalModel.cpf" maxlength="14" mask='000.000.000-00'>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">CEP:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="cep" #ctrlCep="ngModel" [(ngModel)]="professionalModel.cep" mask='00000-000' (blur)="onBlurCep()">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Logradouro:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="logradouro" #ctrlLogradouro="ngModel" [(ngModel)]="professionalModel.logradouro" maxlength="100">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Número:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="numero" #ctrlNumero="ngModel" [(ngModel)]="professionalModel.numero" mask='0000' maxlength="4">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Bairro:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="bairro" #ctrlBairro="ngModel" [(ngModel)]="professionalModel.bairro" maxlength="50">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Cidade:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="cidade" #ctrlCidade="ngModel" [(ngModel)]="professionalModel.cidade" maxlength="50">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">UF:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="uf" #ctrlUf="ngModel" [(ngModel)]="professionalModel.uf" maxlength="2">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Telefone com DDD:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="telefone" #ctrlIdade="ngModel" [(ngModel)]="professionalModel.phone" mask='{{maskPhone}}' (keydown)="onKeydownPhone($event)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">WhatsApp:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="whatsApp" #ctrlWhatsApp="ngModel" [(ngModel)]="professionalModel.whatsApp" mask='{{maskWhatsApp}}' (keydown)="onKeydownWhats($event)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Instagram:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="instagram" #ctrlinstagram="ngModel" [(ngModel)]="professionalModel.instagram">
+                    </div>
+                </div>
+            </div>
+            <hr class="line-detail">
+            <span class="info-form">Informações</span>
+            <div class="container-form">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label custom-label">Selecione os serviços que você oferece:</label>
+                    <div class="col-sm-9 selecionar-servicos">
+                        <ngb-accordion #acc="ngbAccordion">
+                            <ngb-panel *ngFor="let item of products">
+                                <ng-template ngbPanelTitle>
+                                    <span>{{item.name}}</span> <i class="fas fa-sort-down"></i>
+                                </ng-template>
+                                    
+                                <ng-template ngbPanelContent>
+                                <ul>
+                                    <li *ngFor="let prod of item.products" (click)="selecionarProduto(prod)" [ngClass]="{'selecionado' : prod.active}">{{prod.name}} <i class="fas fa-check" *ngIf="prod.active"></i></li>
+                                </ul>
+                                </ng-template>
+                            </ngb-panel>
+                        </ngb-accordion>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label custom-label">Como você trabalha:</label>
+                    <div class="col-sm-9">
+                        <select name="comoTrabalha" id="comoTrabalha" class="form-control" #ctrlComoTrabalha="ngModel" [(ngModel)]="professionalModel.comoTrabalha">
+                        <option value="Proprietario">Sou dono de Salão/Clínica</option>
+                        <option value="Prestador de servico">Presto serviço em Salão/Clínica</option>
+                        <option value="Autonomo">Sou prestador autônomo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label custom-label">Possui certificados dos cursos:</label>
+                    <div class="col-sm-9">
+                        <select name="possuiCursos" id="possuiCursos" class="form-control" #ctrlPossuiCursos="ngModel" [(ngModel)]="professionalModel.possuiCursos">
+            <option value="Sim">Sim</option>
+            <option value="Nao">Não</option>
+          </select>
+                    </div>
+                </div>
+
+                <div *ngIf="professionalModel.possuiCursos === 'Sim'">
+                    <div class="itens-adicionados">
+                        <div class="row">
+                            <div class="col-sm-3">
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="itens">
+                                    <span *ngFor="let fileName of professionalModel.fileNameCertificados">{{fileName}} <i class="fas fa-times"
+                    (click)="deleteCertificado(fileName)"></i></span>
+                                    <span *ngFor="let certificado of certificados">{{certificado.nomeArquivo}} <i class="fas fa-times"
+                    (click)="remove(certificados, certificado)"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label custom-label">Certificados:</label>
+                        <div class="col-sm-9 upload-file">
+                            <a id="uploadCertificadoArea" class="button-file" href="javascript:void(0)" (click)="file.click()">
+                                <img src="assets/icons/icon-upload.svg" alt="">
+                            </a>
+                            <p class="title-button-file">Clique ou arraste o arquivo até esta área reservada</p>
+                            <input id="uploadCertificado" type="file" #file [multiple]="(maxFiles > 1)" (change)="onFileChange($event)" style="display:none" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Tempo de experiência:</label>
+                    <div class="col-sm-9">
+                        <select name="tempoExperiencia" id="tempoExpe" class="form-control" #ctrlTempoExperiencia="ngModel" [(ngModel)]="professionalModel.experiencia">
+              <option value="seis">Menos de 6 meses</option>
+              <option value="seis-umano">6 meses á 1 ano</option>
+              <option value="dois">2 anos</option>
+              <option value="tres">3 anos</option>
+              <option value="quatro">4 anos</option>
+              <option value="cinco">5 anos</option>
+              <option value="cinco-mais">Mais de 5 anos</option>
+          </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label custom-label">Selecione o(s) segmento(s) que você atua:</label>
+                    <div class="col-sm-7">
+                        <select name="segmento" id="segmento" class="form-control" #ctrlSegmento="ngModel" [(ngModel)]="segmentoSelected">
+            <option value="manicure">Manicure</option>
+            <option value="massagista">Massagista</option>
+            <option value="depilador">Depilador</option>
+            <option value="escovista">Escovista</option>
+            <option value="barbeiro">Barbeiro</option>
+            <option value="esteticista-facial">Esteticista Facial</option>
+          </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-add-form" (click)="addSegmento()">Adicionar</button>
+                    </div>
+                </div>
+                <div class="itens-adicionados">
+                    <div class="row">
+                        <div class="col-sm-3">
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="itens">
+                                <span *ngFor="let segmentoItem of segmentosSelected">{{segmentoItem}} <i class="fas fa-times" (click)="remove(segmentosSelected, segmentoItem)"></i></span>
+                                <!--span>Depilação <i class="fas fa-times"></i></span>
+                <span>Cabelo <i class="fas fa-times"></i></span>
+                <span>Massagem <i class="fas fa-times"></i></span-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label custom-label">Possui todos os materias de trabalho? Descreva.</label>
+                    <div class="col-sm-9">
+                        <textarea rows="10" class="form-control" name="possuiMateriais" #ctrlPossuiMateriais="ngModel" [(ngModel)]="professionalModel.possuiMateriais" maxlength="500"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label custom-label">Produtos que utiliza: Possui produtos hipoalergênico?</label>
+                    <div class="col-sm-9">
+                        <textarea rows="10" class="form-control" name="produtosUtilizados" #ctrlProdutosUtilizados="ngModel" [(ngModel)]="professionalModel.produtosUtilizados" maxlength="500"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label custom-label">Conte-me um pouco sobre a sua experiência como profissional de beleza:</label>
+                    <div class="col-sm-9">
+                        <textarea rows="10" class="form-control" name="sobre" #ctrlSobre="ngModel" [(ngModel)]="professionalModel.sobre" maxlength="1000"></textarea>
+                    </div>
+                </div>
+
+                <!-- <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Como soube da Yoolo?</label>
+       <div class="col-sm-9">
+          <select name="quemIndica" id="quemIndica" class="form-control" #ctrlPossuiCursos="ngModel" [(ngModel)]="professionalModel.comoachou">
+              <option value="indeed">Indeed</option>
+              <option value="senac">SENAC</option>
+              <option value="sineBA">SineBA</option>
+              <option value="beautyflix">Beautyflix</option>
+              <option value="embelleze">Embelleze</option>
+              <option value="google">Google</option>
+              <option value="whatsApp">WhatsApp</option>
+              <option value="instagram">Instagram</option>
+              <option value="facebook">Facebook</option>
+              <option value="outro-me-indicou">Outra pessoa me indicou</option>
+              <option value="outros">Outros</option>
+          </select>
+        </div>
+      </div> -->
+            </div>
+
+            <hr class="line-detail">
+            <span class="info-form">Upload</span>
+            <div class="row upload-file mgT50">
+                <div class="col-md-12">
+                    <a class="button-file" href="javascript:void(0)" (click)="file.click()">
+                        <img src="assets/icons/icon-upload.svg" alt="">
+                    </a>
+                    <p class="title-button-file">Clique ou arraste o arquivo até esta área reservada</p>
+                    <input type="file" #file [multiple]="(maxFiles > 1)" (change)="onFileChange($event)" style="display:none" />
+                </div>
+            </div>
+            <div class="bottom-card">
+                <button class="btn btn-cancel-form" (click)="cancel()">Cancelar</button>
+                <button class="btn btn-save-form" (click)="save()">Salvar</button>
+            </div>
+        </div>
+    </app-layout>
+</form>

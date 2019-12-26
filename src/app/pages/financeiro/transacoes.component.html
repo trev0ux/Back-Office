@@ -1,0 +1,44 @@
+<app-layout>
+<h2>Financeiro <i class="fas fa-angle-right"></i> <span>Repasses</span></h2>
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-6"><h4>Filtrar</h4></div>
+    <div class="col-md-6">
+      <div class="filter-data">
+        <span>A partir de </span><input class="form-control" type="text" placeholder="YYYY-MM-DD" [(ngModel)]='startDate' size='5'/><span> até </span>
+        <input class="form-control" type="text" placeholder="YYYY-MM-DD" [(ngModel)]='endDate' size='5'>
+        <input class="btn" type='button' value="Pesquisar" (click)="filtrar()">
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Valor cartão </th>
+      <th>Valor </th> 
+      <th>Taxa transferência do banco</th>
+      <th>Nome do titular</th>
+      <th>CPF</th>
+      <th>Banco</th>
+      <th>Conta</th>
+      <th>Agência</th>
+      <th>Status</th>
+      <th>Data do repasse</th>
+    </tr>
+    <tr *ngFor="let transacao of transacoes">
+      <td>{{transacao.cardAmount}}</td>
+      <td>{{transacao.amount}}</td>
+      <td>{{transacao.bankTransferFee}}</td>
+      <td>{{transacao.bankAccount.holderName}}</td>
+      <td>{{transacao.bankAccount.taxDocument}}</td>
+      <td>{{transacao.bankAccount.bankNumber}}</td>
+      <td>{{transacao.bankAccount.accountNumber}}</td>
+      <td>{{transacao.bankAccount.bankBranchNumber}}</td>
+      <td>{{transacao.status}}</td>
+      <td>{{transacao.scheduledFor}}</td>
+    </tr>
+  </table>
+</div>
+
+</app-layout>
+

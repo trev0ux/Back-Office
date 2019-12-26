@@ -1,0 +1,24 @@
+<app-layout>
+  <h2>Categoria Produtos / Serviços <i class="fas fa-angle-right"></i> <span>Gerenciar</span></h2>
+  <div class="card-body">
+    <button class="btn add" routerLink="/category-produtos/cadastrar"><i class="fas fa-plus"></i> Nova Categoria</button>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 30%">Nome</th>
+            <th scope="col" style="width: 60%">Descrição</th>
+            <th scope="col" class="center" style="width: 10%">Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let categProdItem of categories">
+            <td style="word-break: break-word;">{{categProdItem.name}}</td>
+            <td style="word-break: break-word;">{{categProdItem.description}}</td>
+            <td class="center"><div class="options"><i class="fas fa-pencil-alt editar" (click)="alterar(categProdItem)"></i> <i class="far fa-trash-alt excluir"></i></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-layout>

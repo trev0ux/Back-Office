@@ -1,0 +1,41 @@
+<app-layout>
+    <h2>Produtos / Serviços <i class="fas fa-angle-right"></i> <span>Gerenciar</span></h2>
+    <div class="card-body">
+        <button class="btn add" routerLink="/produtos/cadastrar"><i class="fas fa-plus"></i> Novo Produto / Serviço</button>
+
+        <hr class="line-detail">
+        <span class="info-form">Tipo Negócio</span>
+        <div class="container-form">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label custom-label">Selecione o tipo do negócio da empresa, Yoolo ou Club:</label>
+                <div class="col-sm-7">
+                    <select name="type" id="type" class="form-control" #ctrlType="ngModel" [(ngModel)]="produtoModel.typeCompany">
+                    <option value="Club">Club</option>
+                    <option value="Yoolo">Yoolo</option>
+              </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 30%">Nome</th>
+                        <th scope="col" style="width: 60%">Descrição</th>
+                        <th scope="col" class="center" style="width: 10%">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let prodItem of products">
+                        <td style="word-break: break-word;">{{prodItem.name}}</td>
+                        <td style="word-break: break-word;">{{prodItem.description}}</td>
+                        <td class="center">
+                            <div class="options"><i class="fas fa-pencil-alt editar" (click)="alterar(prodItem)"></i> <i class="far fa-trash-alt excluir"></i></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</app-layout>
